@@ -1,0 +1,5 @@
+== judge llama3.1:8b on qwen2.5-coder_14b Tue Nov 10 00:48:20 +07 2026
+== judge llama3.1:8b on claude-haiku-5-5 Tue Nov 10 01:36:31 +07 2026
+== judge gemma2:9b on qwen2.5-coder_14b Tue Nov 10 02:37:08 +07 2026
+== probe 7b Tue Nov 10 03:03:57 +07 2026
+== all done Tue Nov 10 03:07:57 +07 2026

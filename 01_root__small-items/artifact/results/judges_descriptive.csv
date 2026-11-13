@@ -1,0 +1,4 @@
+generator,judge,n,reject_rate,reject_valid,accept_invalid,pct_agree_prog,kappa_prog
+qwen2.5-coder:14b,llama3.1:8b,253,1.0000,1.0000,0.0000,0.5692,nan
+qwen2.5-coder:14b,gemma2:9b,253,0.4032,0.3303,0.5417,0.5494,0.1223
+claude-haiku-5-5,llama3.1:8b,256,0.8945,0.8920,0.0000,0.1289,0.0056

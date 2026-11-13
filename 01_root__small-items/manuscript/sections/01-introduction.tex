@@ -1,0 +1,41 @@
+\section{Introduction}\label{sec:intro}
+Maintainers ask what a change will affect~\cite{sillito2006questions,ko2007information}; LLM explanations answer ``what
+does this code do?'' and helped developers finish tasks without measurably improving understanding~\cite{nam2024gilt}. Tracing and explaining are distinct skills~\cite{lister2009tracing,murphy2012eipe};
+predicting how behaviour changes under an edit is the skill maintenance needs, and the ``modify'' step of
+PRIMM~\cite{sentance2019primm} already trains it by hand.
+
+We propose the \emph{counterfactual explanation} of code: one intervention, the set of inputs on which the changed
+function behaves differently, \emph{established by execution}, and an articulation of that difference whose parts can be
+\emph{checked by execution}: a witness input and an executable predicate for the affected inputs. The obvious attack is
+that LLMs misdescribe behavioural differences~\cite{khatib2026mutation,reddy2026articulate}, so this paper first measures
+how often LLM-written explanations are wrong, and what execution grounding changes.
+\begin{figure}[!t]
+\centering
+\input{figures/fig1}
+\caption{Counterfactual explanation as an executed contrast (real example: HumanEval+/52, \texttt{<}$\to$\texttt{<=};
+display simplified). The 14B model mispredicts the changed output; running both versions gives the witness; affected-set
+claims written as code are checked on all tests. Icons: Twemoji (CC-BY 4.0).}\label{fig:teaser}
+\end{figure}
+
+\noindent\fbox{\parbox{\dimexpr\columnwidth-2\fboxsep-2\fboxrule}{\small
+\textbf{New idea:} explain a function by an \emph{executed contrast} whose claims (witness, affected-input set) are
+themselves executable, and measure both their reliability and, next, their effect on readers' transfer to unseen changes.
+\textbf{Why new:} counterfactual questions over code probe \emph{models}~\cite{vashishtha2026executable,hasanov2026path,yang2025reversion};
+Cito et al.~\cite{cito2022counterfactual} explain \emph{classifiers} of code; WatChat~\cite{chandra2024watchat} and the
+Whyline~\cite{ko2008whyline} are human-facing but neither checks the explanation against an executed contrast nor tests
+transfer.
+\textbf{Most related paper:} Vashishtha et al., \emph{Executable Counterfactuals}~\cite{vashishtha2026executable}.}}
+\smallskip
+
+\textbf{Hypotheses.}
+\textbf{H0} (pipeline): without execution evidence, LLM explanations of an intervention's effect are often wrong;
+grounding them in differential execution reduces the error.
+\textbf{H1} (instrument): counterfactual (change-impact) questions are harder than matched descriptive ones.
+\textbf{H2} (treatment): counterfactual explanations improve accuracy on \emph{unseen} change-impact questions over
+code only and descriptive explanations. \textbf{H3} (calibration): they reduce overconfidence.
+
+\textbf{Contributions.} (1) The primitive and \CoDE, a pipeline that intervenes, executes, articulates and checks
+(\S\ref{sec:approach}). (2) H0 on \SNMutants{} HumanEval+/MBPP+ functions with two generators and two executable checks
+(witness validity, affected-set exactness) (\S\ref{sec:eval}). (3) A model-side pilot of the H1 instrument
+(LLMs as stand-in readers, \emph{not} human data). (4) A planned H2--H3 protocol
+with generated held-out materials (\S\ref{sec:agenda}); no human study was run.

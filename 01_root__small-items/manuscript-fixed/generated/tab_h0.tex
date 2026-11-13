@@ -1,0 +1,28 @@
+\begin{table}[t]
+\centering\footnotesize
+\caption{H0: ungrounded (U) and grounded (G), in \%. Paired $\Delta$=U$-$G with 95\% bootstrap CI; $p$: exact McNemar, Holm-adjusted ($^{\dagger}$: unadjusted, secondary; bal.\ acc.: Wilcoxon).}
+\label{tab:h0}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrcr@{}}
+\toprule
+Measure & U & G & $\Delta$ & $p$ \\
+\midrule
+\multicolumn{5}{@{}l}{\emph{Qwen2.5-Coder-14B} (witness $n$=129; affected $n$=129)} \\
+\quad witness error & 71.3 & 44.2 & 27.1 [16, 37] & $<$0.001 \\
+\quad witness, copies = error & 71.3 & 70.5 & 0.8 [-9, 11] & 1.000 \\
+\quad \ \ malformed not counted & 60.5 & 58.9 & 1.6 [-9, 11] & 0.880$^{\dagger}$ \\
+\quad affected-set error & 79.8 & 70.5 & 9.3 [2, 16] & 0.118 \\
+\quad \ \ scorable only (3/5 unscor.) & 79.4 & 69.4 & & \\
+\quad affected bal.\ acc.\ (const.\ 59.7) & 65.8 & 72.0 & -6.2 & 0.110$^{\dagger}$ \\
+\quad affected F1 (const.\ 73.6) & 58.6 & 69.9 & & \\
+\multicolumn{5}{@{}l}{\emph{Claude Haiku 5.5} (witness $n$=129; affected $n$=72)} \\
+\quad witness error & 3.9 & 2.3 & 1.6 [-2, 5] & 1.000 \\
+\quad witness, copies = error & 3.9 & 3.1 & 0.8 [-2, 4] & 1.000 \\
+\quad \ \ malformed not counted & 3.1 & 3.1 & 0.0 [-3, 3] & 1.000$^{\dagger}$ \\
+\quad affected-set error & 5.6 & 1.4 & 4.2 [0, 10] & 1.000 \\
+\quad \ \ scorable only (2/0 unscor.) & 2.9 & 1.4 & & \\
+\quad affected bal.\ acc.\ (const.\ 61.1) & 97.4 & 99.4 & -2.0 & 0.066$^{\dagger}$ \\
+\quad affected F1 (const.\ 76.5) & 98.6 & 99.5 & & \\
+\bottomrule
+\end{tabular}
+\end{table}

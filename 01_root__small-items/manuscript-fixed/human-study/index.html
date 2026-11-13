@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Change Comprehension Study (ICPC27-E02)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; max-width: 920px; margin: 24px auto; padding: 0 16px; line-height: 1.5; color: #1e293b; background: #f8fafc; }
+    .card { background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    pre { background: #0f172a; color: #e2e8f0; padding: 14px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: #e2e8f0; }
+    label { display: block; font-weight: 600; margin-top: 12px; }
+    input[type="text"], select { width: 100%; max-width: 420px; padding: 8px; border: 1px solid #94a3b8; border-radius: 6px; margin-top: 4px; }
+    button { background: #2563eb; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 14px; }
+    button:hover { background: #1d4ed8; }
+    .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Code Change Comprehension Study</h1>
+  <div id="setup" class="card">
+    <h2>Participant Setup</h2>
+    <p>Please enter your assigned Participant ID and select the study arm assigned by the experimenter.</p>
+    <label>Participant ID <input id="pid" type="text" placeholder="e.g. P01" /></label>
+    <label>Condition Arm
+      <select id="arm">
+        <option value="code_only">Code Only</option>
+        <option value="descriptive">Descriptive Explanation</option>
+        <option value="counterfactual">Counterfactual Explanation</option>
+      </select>
+    </label>
+    <label>Have you seen these Python tasks before?
+      <select id="familiarity">
+        <option value="none">No, unfamiliar</option>
+        <option value="some">Somewhat familiar</option>
+        <option value="memorized">Yes, seen/memorized</option>
+      </select>
+    </label>
+    <label>Task order (assigned by experimenter)<select id="order"><option>123</option><option>231</option><option>312</option></select></label>
+    <label>Input order (assigned by experimenter)<select id="input-order"><option value="0">A</option><option value="1">B</option></select></label>
+    <p>Predict each result by reading the code. Work without running the code or consulting external aids.</p>
+    <button onclick="startStudy()">Start Study</button>
+  </div>
+
+  <div id="task-view" class="card hidden">
+    <div class="row" style="justify-content: space-between;">
+      <h2 id="task-title">Task</h2>
+      <span id="progress" class="badge"></span>
+    </div>
+    <h3>1. Original Function</h3>
+    <pre id="orig-code"></pre>
+
+    <h3>Reference Edit</h3><pre id="reference-diff"></pre><div id="arm-box"></div>
+
+    <h3>2. Unseen Edit (Predict New Behaviour)</h3>
+    <pre id="unseen-code"></pre>
+
+    <div id="questions"></div>
+    <button onclick="nextTask()">Submit &amp; Next</button>
+  </div>
+
+  <div id="done" class="card hidden">
+    <h2>Study Complete</h2>
+    <p>Thank you for participating. Please download your response file and return it to the experimenter.</p>
+    <button onclick="downloadResults()">Download Responses (JSON)</button>
+  </div>
+
+  <script>
+    let studyData = null;
+    let state = { participant_id: "", arm: "code_only", familiarity: "none", started_at: null, responses: [] };
+    let taskIdx = 0;
+    let tasks = [];
+    let taskStartMs = 0;
+
+    fetch("study_data.json").then(r => r.json()).then(d => { studyData = d; });
+
+    function startStudy() {
+      const pid = document.getElementById("pid").value.trim();
+      if (!pid) { alert("Please enter a Participant ID."); return; }
+      if (!studyData) { alert("study_data.json not loaded. Serve this folder with `python -m http.server`."); return; }
+      state.protocol = studyData.protocol;
+      state.task_order = document.getElementById("order").value;
+      state.input_order = Number(document.getElementById("input-order").value);
+      tasks = Array.from(state.task_order, digit => {
+        const task = studyData.tasks[Number(digit) - 1];
+        const items = state.input_order ? [...task.items].reverse() : task.items;
+        return { ...task, items };
+      });
+      state.participant_id = pid;
+      state.arm = document.getElementById("arm").value;
+      state.familiarity = document.getElementById("familiarity").value;
+      state.started_at = new Date().toISOString();
+      document.getElementById("setup").classList.add("hidden");
+      document.getElementById("task-view").classList.remove("hidden");
+      renderTask();
+    }
+
+    function renderTask() {
+      const t = tasks[taskIdx];
+      taskStartMs = Date.now();
+      document.getElementById("task-title").textContent = `Task ${taskIdx + 1}`;
+      document.getElementById("progress").textContent = `${taskIdx + 1} / ${tasks.length}`;
+      document.getElementById("orig-code").textContent = t.stripped_orig;
+
+      document.getElementById("reference-diff").textContent = t.shown_edit_diff;
+      const armBox = document.getElementById("arm-box");
+      armBox.replaceChildren();
+      function addMaterial(tag, content) {
+        const element = document.createElement(tag);
+        element.textContent = content;
+        armBox.append(element);
+      }
+      if (state.arm !== "code_only") {
+        addMaterial("h3", "Behavioral Summary");
+        addMaterial("p", t.descriptive_prose);
+      }
+      if (state.arm === "counterfactual") {
+        const cf = t.counterfactual;
+        addMaterial("h3", "Executed Witness");
+        addMaterial("pre", ["Arguments: " + cf.witness_input,
+          "Original: " + cf.original_output, "Edited: " + cf.mutant_output].join("\n"));
+        addMaterial("h3", "Affected-Input Predicate Checked on the Test Suite");
+        addMaterial("pre", cf.affected_predicate);
+      }
+      document.getElementById("unseen-code").textContent = t.unseen_mutant_code;
+
+      const qDiv = document.getElementById("questions");
+      qDiv.innerHTML = t.items.map((it, i) => `
+        <div class="card" style="background:#f8fafc;">
+          <p><strong>Question ${i + 1}:</strong> What does the <em>unseen modified function</em> return (or raise) on input <code id="args-${i}"></code>?</p>
+          <label>Predicted Output (Python literal or Exception name, e.g. <code>True</code>, <code>[1, 2]</code>, <code>ValueError</code>)
+            <input id="ans-${i}" type="text" placeholder="Enter Python literal..." />
+          </label>
+          <label>Probability your answer is correct (0 to 100%)
+            <input id="conf-${i}" type="number" min="0" max="100" step="1" required />
+          </label>
+        </div>
+      `).join("");
+      t.items.forEach((it, i) => {
+        document.getElementById("args-" + i).textContent = it.input_repr;
+      });
+    }
+
+    function nextTask() {
+      for (const [i] of tasks[taskIdx].items.entries()) {
+        const answer = document.getElementById("ans-" + i);
+        const confidence = document.getElementById("conf-" + i);
+        if (!answer.value.trim() || !confidence.value || !confidence.reportValidity()) {
+          alert("Enter an answer and a confidence rating for each question.");
+          return;
+        }
+      }
+      const t = tasks[taskIdx];
+      const elapsedSec = (Date.now() - taskStartMs) / 1000.0;
+      t.items.forEach((it, i) => {
+        state.responses.push({
+          task_id: t.id,
+          item_id: it.item_id,
+          kind: it.kind,
+          input_repr: it.input_repr,
+          answer: document.getElementById(`ans-${i}`).value.trim(),
+          confidence_pct: Number(document.getElementById(`conf-${i}`).value),
+          elapsed_sec: elapsedSec
+        });
+      });
+      taskIdx += 1;
+      if (taskIdx < tasks.length) {
+        renderTask();
+      } else {
+        state.finished_at = new Date().toISOString();
+        document.getElementById("task-view").classList.add("hidden");
+        document.getElementById("done").classList.remove("hidden");
+      }
+    }
+
+    function downloadResults() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `response_${state.participant_id}_${state.arm}.json`;
+      a.click();
+    }
+  </script>
+</body>
+</html>

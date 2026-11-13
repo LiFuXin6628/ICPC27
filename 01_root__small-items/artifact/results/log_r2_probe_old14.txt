@@ -1,0 +1,3 @@
+qwen2.5-coder:14b DESC     n=129 acc=0.814
+qwen2.5-coder:14b CF       n=129 acc=0.512
+qwen2.5-coder:14b DESC_MUT n=129 acc=0.411

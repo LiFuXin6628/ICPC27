@@ -1,0 +1,28 @@
+  [DESC] 20/129 (20 new, 116s)
+  [DESC] 40/129 (40 new, 194s)
+  [DESC] 60/129 (60 new, 209s)
+  [DESC] 80/129 (80 new, 224s)
+  [DESC] 100/129 (100 new, 241s)
+  [DESC] 120/129 (120 new, 256s)
+  [CF] 11/129 (140 new, 271s)
+  [CF] 31/129 (160 new, 286s)
+  [CF] 51/129 (180 new, 302s)
+  [CF] 71/129 (200 new, 318s)
+  [CF] 91/129 (220 new, 335s)
+  [CF] 111/129 (240 new, 350s)
+  [CF_CTRL] 3/129 (260 new, 365s)
+  [CF_CTRL] 26/129 (280 new, 417s)
+  [CF_CTRL] 46/129 (300 new, 485s)
+  [CF_CTRL] 68/129 (320 new, 554s)
+  [CF_CTRL] 97/129 (340 new, 624s)
+  [CF_CTRL] 127/129 (360 new, 683s)
+  [DESC_MUT] 18/129 (380 new, 751s)
+  [DESC_MUT] 38/129 (400 new, 806s)
+  [DESC_MUT] 58/129 (420 new, 865s)
+  [DESC_MUT] 78/129 (440 new, 919s)
+  [DESC_MUT] 98/129 (460 new, 977s)
+  [DESC_MUT] 118/129 (480 new, 1027s)
+qwen2.5-coder:14b DESC     n=129 acc=0.775
+qwen2.5-coder:14b CF       n=129 acc=0.481
+qwen2.5-coder:14b CF_CTRL  n=104 acc=0.721
+qwen2.5-coder:14b DESC_MUT n=129 acc=0.527

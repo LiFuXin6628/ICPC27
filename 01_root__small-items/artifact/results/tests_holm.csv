@@ -1,0 +1,12 @@
+test,p,p_holm
+probe_p7s_DESC_vs_CF,1.05399e-10,1.15939e-09
+probe_p14s_DESC_vs_CF,7.56128e-07,7.56128e-06
+wit_gen_raw,3.31188e-06,2.9807e-05
+abl_p14_DESC_MUT_he,0.000976562,0.0078125
+pred_gen_exact,0.0169005,0.118304
+probe_p7s_DESC_MUT_vs_CF,0.0801433,0.48086
+pred_strong_exact,0.25,1
+probe_p14s_DESC_MUT_vs_CF,0.344928,1
+wit_strong_raw,0.625,1
+wit_gen_strict,1,1
+wit_strong_strict,1,1

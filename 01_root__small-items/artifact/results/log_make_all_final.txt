@@ -1,0 +1,107 @@
+<venv>/bin/python src/explain.py --model qwen2.5-coder:14b
+qwen2.5-coder:14b: 258 explanations, 253 parsed as JSON -> results/explanations_qwen2.5-coder_14b.jsonl
+<venv>/bin/python src/explain.py --model claude-haiku-5-5
+claude-haiku-5-5: 258 explanations, 256 parsed as JSON -> results/explanations_claude-haiku-5-5.jsonl
+<venv>/bin/python src/check.py --explanations explanations_qwen2.5-coder_14b.jsonl
+  10/258
+  20/258
+  30/258
+  40/258
+  50/258
+  60/258
+  70/258
+  80/258
+  90/258
+  100/258
+  110/258
+  120/258
+  130/258
+  140/258
+  150/258
+  160/258
+  170/258
+  180/258
+  190/258
+  200/258
+  210/258
+  220/258
+  230/258
+  240/258
+  250/258
+ungrounded n=129 programmatic-error=0.713  judge[llama3.1:8b]-error=1.000  judge[gemma2:9b]-error=0.589
+grounded   n=129 programmatic-error=0.442  judge[llama3.1:8b]-error=1.000  judge[gemma2:9b]-error=0.240
+<venv>/bin/python src/check.py --explanations explanations_claude-haiku-5-5.jsonl --judges llama3.1:8b
+  10/258
+  20/258
+  30/258
+  40/258
+  50/258
+  60/258
+  70/258
+  80/258
+  90/258
+  100/258
+  110/258
+  120/258
+  130/258
+  140/258
+  150/258
+  160/258
+  170/258
+  180/258
+  190/258
+  200/258
+  210/258
+  220/258
+  230/258
+  240/258
+  250/258
+ungrounded n=129 programmatic-error=0.039  judge[llama3.1:8b]-error=0.922
+grounded   n=129 programmatic-error=0.023  judge[llama3.1:8b]-error=0.868
+<venv>/bin/python src/predicate.py --model qwen2.5-coder:14b
+qwen2.5-coder:14b ungrounded n=129 exact=0.202 bal_acc=0.647
+qwen2.5-coder:14b grounded   n=129 exact=0.295 bal_acc=0.701
+<venv>/bin/python src/predicate.py --model claude-haiku-5-5
+claude-haiku-5-5 ungrounded n=72 exact=0.944 bal_acc=0.960
+claude-haiku-5-5 grounded   n=72 exact=0.986 bal_acc=0.994
+<venv>/bin/python src/probe.py --model qwen2.5-coder:14b --kinds DESC,CF,DESC_MUT
+qwen2.5-coder:14b DESC     n=129 acc=0.814
+qwen2.5-coder:14b CF       n=129 acc=0.512
+qwen2.5-coder:14b DESC_MUT n=129 acc=0.411
+<venv>/bin/python src/probe.py --model qwen2.5-coder:7b-instruct-q8_0 --kinds DESC,CF
+qwen2.5-coder:7b-instruct-q8_0 DESC     n=129 acc=0.760
+qwen2.5-coder:7b-instruct-q8_0 CF       n=129 acc=0.279
+<venv>/bin/python src/probe.py --model qwen2.5-coder:14b --variant stripped --kinds DESC,CF,CF_CTRL,DESC_MUT
+qwen2.5-coder:14b DESC     n=129 acc=0.775
+qwen2.5-coder:14b CF       n=129 acc=0.481
+qwen2.5-coder:14b CF_CTRL  n=104 acc=0.721
+qwen2.5-coder:14b DESC_MUT n=129 acc=0.527
+<venv>/bin/python src/probe.py --model qwen2.5-coder:7b-instruct-q8_0 --variant stripped --kinds DESC,CF,CF_CTRL,DESC_MUT
+qwen2.5-coder:7b-instruct-q8_0 DESC     n=129 acc=0.760
+qwen2.5-coder:7b-instruct-q8_0 CF       n=129 acc=0.333
+qwen2.5-coder:7b-instruct-q8_0 CF_CTRL  n=104 acc=0.712
+qwen2.5-coder:7b-instruct-q8_0 DESC_MUT n=129 acc=0.419
+<venv>/bin/python src/build_heldout.py
+held-out mutants: 62/129; with both affected and unaffected inputs: 51
+<venv>/bin/python src/analyze.py
+abl_p14_DESC_MUT_he_p_holm                    p=0.000977 holm=0.00781
+pred_gen_exact_p_holm                         p=0.0169 holm=0.118
+pred_strong_exact_p_holm                      p=0.25 holm=1
+probe_p14s_DESC_MUT_vs_CF_p_holm              p=0.345 holm=1
+probe_p14s_DESC_vs_CF_p_holm                  p=7.56e-07 holm=7.56e-06
+probe_p7s_DESC_MUT_vs_CF_p_holm               p=0.0801 holm=0.481
+probe_p7s_DESC_vs_CF_p_holm                   p=1.05e-10 holm=1.16e-09
+wit_gen_raw_p_holm                            p=3.31e-06 holm=2.98e-05
+wit_gen_strict_p_holm                         p=1 holm=1
+wit_strong_raw_p_holm                         p=0.625 holm=1
+wit_strong_strict_p_holm                      p=1 holm=1
+<venv>/bin/python src/render.py
+rendered -> <home>/Workstation/ICPC-NIER/ICPC-ERA/proposals/E02-counterfactual-comprehension/manuscript/generated ['fig_strata.tex', 'macros.tex', 'tab_corpus.tex', 'tab_h0.tex', 'tab_probe.tex']
+cd ../manuscript && rm -rf build && mkdir -p build && cp -r main.tex references.bib sections generated build/ \
+	&& sed -i.bak 's/compat=1.18/compat=1.17/' build/main.tex \
+	&& cd build && pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null \
+	&& bibtex main >/dev/null && pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null \
+	&& pdflatex -interaction=nonstopmode -halt-on-error main.tex | grep -E "Output written|^!" ; \
+	cp ../manuscript/build/main.pdf ../manuscript/main.pdf && grep -c "undefined" ../manuscript/build/main.log || true
+Output written on main.pdf (5 pages, 222808 bytes).
+0

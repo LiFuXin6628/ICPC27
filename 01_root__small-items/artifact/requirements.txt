@@ -1,0 +1,5 @@
+# Python 3.13.5 (tested). Stdlib + these pinned packages.
+numpy==2.5.4
+scipy==1.18.1
+datasets==5.1.0
+anthropic==2.6.0   # only needed when the claude-haiku-5-5 cache is missing

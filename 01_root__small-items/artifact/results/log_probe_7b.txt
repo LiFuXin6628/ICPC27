@@ -1,0 +1,14 @@
+  [DESC] 20/129 (20 new, 12s)
+  [DESC] 40/129 (40 new, 29s)
+  [DESC] 60/129 (60 new, 49s)
+  [DESC] 80/129 (80 new, 70s)
+  [DESC] 100/129 (100 new, 89s)
+  [DESC] 120/129 (120 new, 106s)
+  [CF] 11/129 (140 new, 127s)
+  [CF] 31/129 (160 new, 144s)
+  [CF] 51/129 (180 new, 162s)
+  [CF] 71/129 (200 new, 181s)
+  [CF] 91/129 (220 new, 203s)
+  [CF] 111/129 (240 new, 221s)
+qwen2.5-coder:7b-instruct-q8_0 DESC     n=129 acc=0.760
+qwen2.5-coder:7b-instruct-q8_0 CF       n=129 acc=0.279

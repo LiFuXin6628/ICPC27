@@ -1,0 +1,6 @@
+id,shown_affected,unseen_affected,jaccard,passes_overlap_cap
+HumanEvalP/119,15,24,0.625000,False
+HumanEvalP/20,55,110,0.386555,True
+HumanEvalP/31,23,66,0.022989,True
+HumanEvalP/61,7,11,0.000000,True
+MBPPP/589,52,45,0.865385,False

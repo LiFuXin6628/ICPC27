@@ -1,0 +1,10 @@
+\begin{abstract}
+When maintainers consider a code change, they need to know which inputs it affects and how. We propose an
+executed what-if explanation that pairs a single-site edit with a witness, an affected-input predicate, and prose
+describing the change. \CoDE checks the witness by running both versions and checks the predicate against their
+observed differences on a finite test suite. Across \SNMutants{} HumanEval+/MBPP+ functions, supplying execution
+evidence reduced Qwen2.5-Coder-14B's witness error from \PWitGenRawA\% to \PWitGenRawB\%; counting copied
+witnesses as errors brought the grounded error to \PWitGenStrictB\%. Claude Haiku 5.5 classified every tested input
+correctly on \SPredStrongUExactN{} of \SPredStrongN{} functions without execution evidence (65/68 remaining exact on up to 50 fresh held-out inputs). Seeded differential testing found witnesses for 87.6\% of edits within 50 scorable inputs. In a separate model probe, the 14B model answered \PProbePonefoursCF\% of
+change-impact questions and \PProbePonefoursDESC\% of descriptive questions correctly. In an initial human study ($N=9$, 54 judgments), counterfactual explanations improved change-impact prediction accuracy to 88.9\% (vs.\ 61.1\% code only; Odds Ratio 5.09) and reduced Brier calibration error from 0.205 to 0.052 (Cohen's $d=0.857$). Claims remain scoped to single-function edits and finite test suites, establishing an empirical foundation for auditable, execution-backed change explanations.
+\end{abstract}

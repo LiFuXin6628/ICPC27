@@ -1,0 +1,2 @@
+qwen2.5-coder:7b-instruct-q8_0 DESC     n=129 acc=0.760
+qwen2.5-coder:7b-instruct-q8_0 CF       n=129 acc=0.279

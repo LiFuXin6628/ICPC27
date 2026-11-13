@@ -1,0 +1,59 @@
+{
+  "protocol": "near-transfer-v2",
+  "items": {
+    "HumanEvalP/20_affected": {
+      "task_id": "HumanEvalP/20",
+      "kind": "affected",
+      "input_repr": "[[1.0, 2.0, 3.9, 4.0, 5.0, 2.2]]",
+      "outcome": {
+        "ok": true,
+        "repr": "(1.0, 1.0)"
+      }
+    },
+    "HumanEvalP/20_unaffected": {
+      "task_id": "HumanEvalP/20",
+      "kind": "unaffected",
+      "input_repr": "[[1.5, 1.5, 2.5, 3.5, 4.5]]",
+      "outcome": {
+        "ok": true,
+        "repr": "(1.5, 1.5)"
+      }
+    },
+    "HumanEvalP/31_affected": {
+      "task_id": "HumanEvalP/31",
+      "kind": "affected",
+      "input_repr": "[6]",
+      "outcome": {
+        "ok": true,
+        "repr": "True"
+      }
+    },
+    "HumanEvalP/31_unaffected": {
+      "task_id": "HumanEvalP/31",
+      "kind": "unaffected",
+      "input_repr": "[101]",
+      "outcome": {
+        "ok": true,
+        "repr": "True"
+      }
+    },
+    "HumanEvalP/61_affected": {
+      "task_id": "HumanEvalP/61",
+      "kind": "affected",
+      "input_repr": "['()']",
+      "outcome": {
+        "ok": true,
+        "repr": "False"
+      }
+    },
+    "HumanEvalP/61_unaffected": {
+      "task_id": "HumanEvalP/61",
+      "kind": "unaffected",
+      "input_repr": "['((()())))']",
+      "outcome": {
+        "ok": true,
+        "repr": "False"
+      }
+    }
+  }
+}

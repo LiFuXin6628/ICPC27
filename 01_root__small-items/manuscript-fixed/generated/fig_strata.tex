@@ -1,0 +1,24 @@
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth,height=4.6cm,ybar=1pt,bar width=7pt,ymin=0,ymax=118,
+  ylabel={affected-set error (\%)},ylabel style={font=\footnotesize},
+  symbolic x coords={narrow,mid,broad},xtick=data,xticklabels={{$<$10\% ($n$=19)},{10--50\% ($n$=24)},{$\geq$50\% ($n$=86)}},
+  x tick label style={font=\scriptsize},y tick label style={font=\scriptsize},enlarge x limits=0.22,
+  nodes near coords,nodes near coords style={font=\tiny,rotate=90,anchor=west,/pgf/number format/.cd,fixed,precision=1,fixed zerofill},
+  legend style={at={(0.5,1.02)},anchor=south,legend columns=2,font=\scriptsize,draw=none,/tikz/every even column/.append style={column sep=4pt}},
+  legend image code/.code={\draw[#1] (0cm,-0.08cm) rectangle (0.3cm,0.12cm);},
+  ymajorgrids,grid style={dashed,gray!30}]
+\addplot[ybar,fill=white,draw=black] coordinates {(narrow,68.4) (mid,91.7) (broad,79.1)};
+\addlegendentry{Qwen2.5-Coder-14B, U}
+\addplot[ybar,fill=gray!55,draw=black] coordinates {(narrow,63.2) (mid,83.3) (broad,68.6)};
+\addlegendentry{Qwen2.5-Coder-14B, G}
+\addplot[ybar,fill=white,draw=black,postaction={pattern=north east lines}] coordinates {(narrow,0.0) (mid,15.4) (broad,4.0)};
+\addlegendentry{Claude Haiku 5.5, U}
+\addplot[ybar,fill=gray!55,draw=black,postaction={pattern=crosshatch}] coordinates {(narrow,0.0) (mid,7.7) (broad,0.0)};
+\addlegendentry{Claude Haiku 5.5, G}
+\end{axis}
+\end{tikzpicture}
+\caption{Affected-set error by breadth of the executed difference (fraction of test inputs whose result changes); tick labels give Qwen2.5-Coder-14B's $n$. Claude Haiku 5.5 bars cover its 72-function subset ($n$=9/13/50). Values printed on bars (0.0 = no error).}
+\label{fig:strata}
+\end{figure}

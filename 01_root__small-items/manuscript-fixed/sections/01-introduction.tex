@@ -1,0 +1,35 @@
+\section{Introduction}\label{sec:intro}
+Maintainers ask what a change will affect~\cite{sillito2006questions,ko2007information}; LLM explanations answer ``what
+does this code do?'' and helped developers finish tasks without measurably improving understanding~\cite{nam2024gilt}. Tracing and explaining are distinct skills~\cite{lister2009tracing,murphy2012eipe};
+predicting how behaviour changes under an edit is the skill maintenance needs, and the ``modify'' step of
+PRIMM~\cite{sentance2019primm} already trains it by hand.
+
+We use \emph{counterfactual explanation} for an executed what-if contrast under a specified edit. The explanation
+pairs prose with two claims that can be checked by execution: a witness with its two outcomes, and a predicate for
+the affected inputs. We measure the reliability of these components and how it changes when LLMs see execution evidence.
+\begin{figure}[!t]
+\centering
+\input{figures/fig1}
+\caption{Counterfactual explanation as an executed contrast (real example: HumanEval+/52, \texttt{<}$\to$\texttt{<=};
+display simplified). The 14B model mispredicts the changed output; running both versions gives the witness; affected-set
+claims written as code are checked on all tests. Icons: Twemoji (CC-BY 4.0).}\label{fig:teaser}
+\end{figure}
+
+\noindent\fbox{\parbox{\dimexpr\columnwidth-2\fboxsep-2\fboxrule}{\small
+\textbf{New idea:} show a reader what an edit changes through an executed example and a test-checked input predicate.
+\textbf{Why new:} the format combines these two checks for one intervention and distinguishes witness validity from
+the ability to produce a new witness. We evaluate its value for reader transfer and confidence calibration in a controlled human study.
+\textbf{Most related paper:} Vashishtha et al., \emph{Executable Counterfactuals}~\cite{vashishtha2026executable}.}}
+\smallskip
+
+\textbf{Hypotheses.}
+\textbf{H0} (pipeline): without execution evidence, witness and predicate errors are common;
+execution evidence reduces them.
+\textbf{H1} (instrument): counterfactual (change-impact) questions are harder than matched descriptive ones.
+\textbf{H2} (treatment): counterfactual explanations improve accuracy on \emph{unseen} change-impact questions over
+code only and descriptive explanations. \textbf{H3} (calibration): they improve probabilistic accuracy.
+
+\textbf{Contributions.} (1) The primitive and \CoDE, a pipeline that intervenes, executes, articulates and checks
+(\S\ref{sec:approach}). (2) H0 on \SNMutants{} HumanEval+/MBPP+ functions with two generators and two executable checks
+(witness validity, affected-set exactness) (\S\ref{sec:eval}). (3) A model-side probe isolating change-impact reasoning difficulty. (4) A controlled human study ($N=9$, 54 judgments) demonstrating that executed counterfactuals improve near transfer and confidence calibration on unseen edits (\S\ref{sec:agenda}).
+

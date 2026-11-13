@@ -1,0 +1,14 @@
+\begin{abstract}
+LLM explanations of code say what a function does; maintainers need to know what changes when the code changes. We
+propose the \emph{counterfactual explanation} of code: a single-site intervention, the inputs on which the changed
+function behaves differently, established by differential execution, and an articulation whose claims are themselves
+executable: a witness input and a predicate for the affected inputs. \CoDE mutates a function, executes both versions on
+its tests, has an LLM articulate the difference with or without the execution evidence, and runs the claims. On \SNMutants{} HumanEval+/MBPP+ functions, a hosted model (Claude Haiku 5.5) wrote affected-input predicates
+that execution certifies as exact on the test inputs for \SPredStrongUExactN{} of \SPredStrongN{} functions without any
+evidence. A local 14B model did poorly, and execution
+grounding did not fix its reasoning: its witness error fell from \PzWitGenRawA\% to \PzWitGenRawB\% only because it copied
+shown witnesses (counting copies as errors, \PWitGenStrictB\% vs.\ \PWitGenStrictA\%), and its predicates are worse than a
+constant baseline on F1. In a model-side probe (not human data) with docstrings and names removed, counterfactual questions
+are much harder than descriptive ones (\PzProbePonefoursCF\% vs.\ \PzProbePonefoursDESC\%), mostly because mutated code is
+hard for models to trace. We outline a planned between-subjects study of transfer to unseen changes.
+\end{abstract}

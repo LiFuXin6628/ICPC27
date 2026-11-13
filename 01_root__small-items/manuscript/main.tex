@@ -1,0 +1,41 @@
+\documentclass[10pt,conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns,shapes.callouts,arrows.meta}
+% Shipped with compat=1.18 (TeX Live >= 2021). On TeX Live 2020 (pgfplots 1.17) 1.18 is fatal;
+% `make pdf` seds this line to 1.17 in a build copy for verification.
+\pgfplotsset{compat=1.18}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{xspace}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\input{generated/macros.tex}
+\newcommand{\CoDE}{\textsc{CoDE}\xspace}
+\newtheorem{definition}{Definition}
+\lstset{basicstyle=\ttfamily\scriptsize,columns=fullflexible,keepspaces=true,breaklines=true}
+\begin{document}
+\title{Counterfactual Explanations of Code: Executed Contrasts as a Primitive for Program Comprehension}
+\author{\IEEEauthorblockN{Anonymous Author(s)}\IEEEauthorblockA{Anonymous Affiliation}}
+\maketitle
+\input{sections/00-abstract}
+\begin{IEEEkeywords}
+program comprehension, counterfactual explanation, mutation analysis, differential execution, large language models
+\end{IEEEkeywords}
+\input{sections/01-introduction}
+\input{sections/02-background-and-related-work}
+\input{sections/03-approach}
+\input{sections/04-preliminary-evaluation}
+\input{sections/05-discussion-and-agenda}
+\input{sections/06-conclusion}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

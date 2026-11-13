@@ -1,0 +1,1 @@
+claude-haiku-5-5: 258 explanations, 256 parsed as JSON -> results/explanations_claude-haiku-5-5.jsonl

@@ -1,0 +1,13 @@
+generator,condition,stratum,n,exact_err,bal_acc
+qwen2.5-coder:14b,ungrounded,narrow,19,0.6842,0.7189
+qwen2.5-coder:14b,ungrounded,mid,24,0.9167,0.5986
+qwen2.5-coder:14b,ungrounded,broad,86,0.7907,0.6616
+qwen2.5-coder:14b,grounded,narrow,19,0.6316,0.8485
+qwen2.5-coder:14b,grounded,mid,24,0.8333,0.6111
+qwen2.5-coder:14b,grounded,broad,86,0.6860,0.7226
+claude-haiku-5-5,ungrounded,narrow,9,0.0000,1.0000
+claude-haiku-5-5,ungrounded,mid,13,0.1538,0.9330
+claude-haiku-5-5,ungrounded,broad,50,0.0400,0.9800
+claude-haiku-5-5,grounded,narrow,9,0.0000,1.0000
+claude-haiku-5-5,grounded,mid,13,0.0769,0.9657
+claude-haiku-5-5,grounded,broad,50,0.0000,1.0000

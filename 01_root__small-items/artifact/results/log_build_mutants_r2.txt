@@ -1,0 +1,177 @@
+[1/176] HumanEvalP/73: BOUND_CONST differs on 101/120 e.g. [[1, 2, 3, 5, 4, 7, 9, 6]] -> 4 / 2
+[2/176] HumanEvalP/24: BOUND_CONST differs on 120/120 e.g. [3] -> 1 / 3
+[3/176] HumanEvalP/30: BOUND_CONST differs on 54/120 e.g. [[5, 3, -5, 2, 3, 3, 9, 0, 123, 1, -10]] -> [5, 3, 2, 3, 3, 9, 123, 1] / [5, 3, 2, 3, 3, 9, 0, 123, 1]
+[4/176] HumanEvalP/147: ARITH_OP differs on 113/115 e.g. [5] -> 1 / 5
+[5/176] HumanEvalP/25: NEG_GUARD differs on 119/120 e.g. [4] -> [2, 2] / [3]
+[6/176] HumanEvalP/113: ARITH_OP differs on 113/120 e.g. [['1234567']] -> ['the number of odd elements 4n the s... / ['the number of odd elements 2n the s...
+[7/176] HumanEvalP/111: NEG_GUARD differs on 120/120 e.g. ['a b b a'] -> {'a': 2, 'b': 2} / {}
+[8/176] HumanEvalP/6: NEG_GUARD differs on 68/69 e.g. ['(()()) ((())) () ((())()())'] -> [2, 3, 1, 3] / [0, 0, 0, 0]
+[9/176] HumanEvalP/57: ARITH_OP differs on 8/120 e.g. [[1, 2, 4, 10]] -> True / False
+[10/176] HumanEvalP/156: ARITH_OP differs on 115/120 e.g. [19] -> 'xix' / raises IndexError
+[11/176] HumanEvalP/60: ARITH_OP differs on 120/120 e.g. [1] -> 1 / 4
+[12/176] HumanEvalP/22: CMP_OP differs on 119/120 e.g. [[4, {}, [], 23.2, 9, 'adasd']] -> [4, 9] / [{}, [], 23.2, 'adasd']
+[13/176] HumanEvalP/23: no candidates
+[14/176] HumanEvalP/150: ARITH_OP differs on 52/120 e.g. [15, 8, 5] -> 5 / 8
+[15/176] HumanEvalP/62: BOUND_CONST differs on 119/120 e.g. [[3, 1, 2, 4, 5]] -> [1, 4, 12, 20] / [4, 12, 20]
+[16/176] HumanEvalP/131: NEG_GUARD differs on 120/120 e.g. [5] -> 5 / 0
+[17/176] HumanEvalP/69: CMP_OP differs on 70/120 e.g. [[5, 5, 5, 5, 1]] -> 1 / -1
+[18/176] HumanEvalP/121: CMP_OP differs on 119/120 e.g. [[5, 8, 7, 1]] -> 12 / 0
+[19/176] HumanEvalP/36: ARITH_OP differs on 103/120 e.g. [50] -> 0 / 1
+[20/176] HumanEvalP/134: NEG_GUARD differs on 28/120 e.g. ['apple'] -> False / True
+[21/176] HumanEvalP/143: BOUND_CONST differs on 87/120 e.g. ['This is a test'] -> 'is' / ''
+[22/176] HumanEvalP/83: DEL_GUARD differs on 1/109 e.g. [1] -> 1 / 1.8
+[23/176] HumanEvalP/108: NEG_GUARD differs on 119/120 e.g. [[-1, -2, 0]] -> 0 / raises ValueError
+[24/176] HumanEvalP/89: ARITH_OP differs on 119/120 e.g. ['hi'] -> 'lm' / 'xy'
+[25/176] HumanEvalP/41: ARITH_OP differs on 78/79 e.g. [3] -> 9 / 6
+[26/176] HumanEvalP/99: ARITH_OP differs on 3/120 e.g. ['14.5'] -> 15 / 13
+[27/176] HumanEvalP/71: DEL_GUARD differs on 47/120 e.g. [1, 2, 10] -> -1 / raises TypeError
+[28/176] HumanEvalP/97: ARITH_OP differs on 101/120 e.g. [148, 412] -> 16 / 4
+[29/176] HumanEvalP/43: DEL_GUARD differs on 91/120 e.g. [[2, 4, -5, 3, 5, 7]] -> True / False
+[30/176] HumanEvalP/148: NEG_GUARD differs on 11/120 e.g. ['Jupiter', 'Neptune'] -> ('Saturn', 'Uranus') / ()
+[31/176] HumanEvalP/38: BOUND_CONST differs on 119/120 e.g. ['uzfplzjfzcltmdly'] -> 'fuzzplzjftcllmdy' / 'uzfplzjfzcltmdly'
+[32/176] HumanEvalP/135: DEL_GUARD differs on 108/120 e.g. [[1, 2, 4, 3, 5]] -> 3 / -1
+[33/176] HumanEvalP/27: no candidates
+[34/176] HumanEvalP/86: no candidates
+[35/176] HumanEvalP/52: CMP_OP differs on 7/120 e.g. [[1, 8, 4, 10], 10] -> False / True
+[36/176] HumanEvalP/34: no candidates
+[37/176] HumanEvalP/7: no candidates
+[38/176] HumanEvalP/13: CMP_OP differs on 102/120 e.g. [3, 7] -> 1 / 3
+[39/176] HumanEvalP/140: ARITH_OP differs on 117/120 e.g. ['Example'] -> 'Example' / raises TypeError
+[40/176] HumanEvalP/5: ARITH_OP differs on 115/120 e.g. [[5, 6, 3, 2], 8] -> [5, 8, 6, 8, 3, 8, 2] / [5, 8, 6, 8, 3, 8, 2, 8]
+[41/176] HumanEvalP/33: ARITH_OP differs on 114/120 e.g. [[5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10]] -> [1, 3, -5, 2, -3, 3, 5, 0, 123, 9, -10] / raises IndexError
+[42/176] HumanEvalP/91: no candidates
+[43/176] HumanEvalP/28: no candidates
+[44/176] HumanEvalP/2: ARITH_OP differs on 99/120 e.g. [3.5] -> 0.5 / 6.5
+[45/176] HumanEvalP/77: ARITH_OP differs on 19/120 e.g. [1] -> True / False
+[46/176] HumanEvalP/78: no candidates
+[47/176] HumanEvalP/31: NEG_GUARD differs on 23/120 e.g. [6] -> False / True
+[48/176] HumanEvalP/20: CMP_OP differs on 55/120 e.g. [[1.5, 2.5, 3.5, 4.5]] -> (1.5, 2.5) / (3.5, 4.5)
+[49/176] HumanEvalP/123: NEG_GUARD differs on 114/120 e.g. [14] -> [1, 5, 7, 11, 13, 17] / [1]
+[50/176] HumanEvalP/87: NEG_GUARD differs on 99/120 e.g. [[[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 1, 6], [1, 2, 3 -> [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)] / [(0, 5), (0, 4), (0, 3), (0, 2), (0, ...
+[51/176] HumanEvalP/61: DEL_GUARD differs on 7/120 e.g. [')(()'] -> False / True
+[52/176] HumanEvalP/26: CMP_OP differs on 119/120 e.g. [[1, 2, 3, 4]] -> [1, 2, 3, 4] / []
+[53/176] HumanEvalP/63: NEG_GUARD differs on 59/65 e.g. [5] -> 4 / 1
+[54/176] HumanEvalP/58: no candidates
+[55/176] HumanEvalP/152: ARITH_OP differs on 117/120 e.g. [[1, 2, 3, 4, 5, 1], [1, 2, 3, 4, 2, -2]] -> [0, 0, 0, 0, 3, 3] / [2, 4, 6, 8, 7, 1]
+[56/176] HumanEvalP/133: ARITH_OP differs on 118/120 e.g. [[1, 2, 3]] -> 14 / 12
+[57/176] HumanEvalP/54: CMP_OP differs on 120/120 e.g. ['eabcdzzzz', 'dddzzzzzzzddeddabc'] -> True / False
+[58/176] HumanEvalP/153: NEG_GUARD differs on 89/120 e.g. ['Watashi', ['tEN', 'niNE', 'eIGHt8OKe']] -> 'Watashi.eIGHt8OKe' / 'Watashi.tEN'
+[59/176] HumanEvalP/120: no candidates
+[60/176] HumanEvalP/40: BOUND_CONST differs on 34/120 e.g. [[1, 3, -2, 1]] -> True / False
+[61/176] HumanEvalP/144: ARITH_OP differs on 34/120 e.g. ['1/6', '2/1'] -> False / True
+[62/176] HumanEvalP/127: BOUND_CONST differs on 13/120 e.g. [[-3, -1], [-5, 5]] -> 'YES' / 'NO'
+[63/176] HumanEvalP/129: ARITH_OP differs on 54/120 e.g. [[[12, 13, 10, 1], [9, 3, 15, 6], [5, 16, 14, 4],  -> [1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6] / [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
+[64/176] HumanEvalP/92: ARITH_OP differs on 4/120 e.g. [2, 3, 1] -> True / False
+[65/176] HumanEvalP/76: BOUND_CONST differs on 2/120 e.g. [1, 12] -> True / False
+[66/176] HumanEvalP/70: NEG_GUARD differs on 120/120 e.g. [[1, 2, 3, 4]] -> [1, 4, 2, 3] / []
+[67/176] HumanEvalP/163: BOUND_CONST differs on 19/120 e.g. [2, 10] -> [2, 4, 6, 8] / []
+[68/176] HumanEvalP/53: ARITH_OP differs on 117/120 e.g. [0, 1] -> 1 / -1
+[69/176] HumanEvalP/85: ARITH_OP differs on 103/120 e.g. [[4, 88]] -> 88 / 0
+[70/176] HumanEvalP/110: ARITH_OP differs on 49/120 e.g. [[1, 2, 3, 4], [1, 2, 3, 4]] -> 'YES' / 'NO'
+[71/176] HumanEvalP/18: NEG_GUARD differs on 118/120 e.g. ['xyxyxyx', 'x'] -> 4 / 3
+[72/176] HumanEvalP/141: DEL_GUARD differs on 2/120 e.g. ['.txt'] -> 'No' / raises IndexError
+[73/176] HumanEvalP/117: CMP_OP differs on 31/120 e.g. ['Mary had a little lamb', 4] -> ['little'] / []
+[74/176] HumanEvalP/11: no candidates
+[75/176] HumanEvalP/118: DEL_GUARD differs on 104/120 e.g. ['yogurt'] -> 'u' / ''
+[76/176] HumanEvalP/146: BOUND_CONST differs on 11/120 e.g. [[11, 232, 324, -876, 799]] -> 2 / 1
+[77/176] HumanEvalP/114: NEG_GUARD differs on 110/120 e.g. [[-1, -2, -3]] -> -6 / -3
+[78/176] HumanEvalP/66: no candidates
+[79/176] HumanEvalP/145: CMP_OP differs on 117/120 e.g. [[1, 11, -1, -11, -12]] -> [-1, -11, 1, -12, 11] / raises IndexError
+[80/176] HumanEvalP/3: NEG_GUARD differs on 47/120 e.g. [[1, 2, -3, 1, 2, -3]] -> False / True
+[81/176] HumanEvalP/10: DEL_GUARD differs on 15/120 e.g. [''] -> '' / None
+[82/176] HumanEvalP/50: ARITH_OP differs on 120/120 e.g. ['tantywccpjkimslotpzs'] -> 'oviotrxxkefdhngjokun' / 'yfsydbhhuopnrxqtyuex'
+[83/176] HumanEvalP/55: DEL_GUARD differs on 2/45 e.g. [0] -> 0 / 1
+[84/176] HumanEvalP/68: DEL_GUARD differs on 110/120 e.g. [[4, 2, 3]] -> [2, 1] / None
+[85/176] HumanEvalP/0: ARITH_OP differs on 32/120 e.g. [[1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05] -> False / raises IndexError
+[86/176] HumanEvalP/128: DEL_GUARD differs on 1/120 e.g. [[]] -> None / 0
+[87/176] HumanEvalP/119: BOUND_CONST differs on 15/120 e.g. [['()(', ')']] -> 'Yes' / 'No'
+[88/176] HumanEvalP/46: CMP_OP differs on 116/120 e.g. [5] -> 4 / 0
+[89/176] MBPPP/224: no non-equivalent mutant among 1
+[90/176] MBPPP/120: ARITH_OP differs on 105/116 e.g. [[(2, 7), (2, 6), (1, 8), (4, 9)]] -> 36 / 0
+[91/176] MBPPP/446: no candidates
+[92/176] MBPPP/792: no candidates
+[93/176] MBPPP/616: ARITH_OP differs on 102/108 e.g. [(10, 4, 5, 6), (5, 6, 7, 5)] -> (0, 4, 5, 1) / (2, 0, 0, 1)
+[94/176] MBPPP/391: no candidates
+[95/176] MBPPP/602: ARITH_OP differs on 13/108 e.g. ['ABCaBC'] -> 'B' / None
+[96/176] MBPPP/619: no non-equivalent mutant among 1
+[97/176] MBPPP/554: CMP_OP differs on 107/107 e.g. [[1, 2, 3, 4, 5, 6]] -> [1, 3, 5] / [2, 4, 6]
+[98/176] MBPPP/141: ARITH_OP differs on 111/111 e.g. [[15, 79, 25, 38, 69]] -> [15, 25, 38, 69, 79] / [69, 79, 69, 79]
+[99/176] MBPPP/418: no candidates
+[100/176] MBPPP/610: ARITH_OP differs on 108/108 e.g. [[1, 1, 2, 3, 4, 4, 5, 1], 3] -> [1, 1, 3, 4, 4, 5, 1] / [1, 1, 2, 3, 3, 4, 4, 5, 1]
+[101/176] MBPPP/590: no candidates
+[102/176] MBPPP/572: CMP_OP differs on 108/109 e.g. [[1, 2, 3, 2, 3, 4, 5]] -> [1, 4, 5] / [2, 3, 2, 3]
+[103/176] MBPPP/251: no candidates
+[104/176] MBPPP/450: CMP_OP differs on 102/108 e.g. [['Python', 'list', 'exercises', 'practice', 'solu -> ['practice', 'solution'] / ['Python', 'list', 'exercises']
+[105/176] MBPPP/566: no candidates
+[106/176] MBPPP/96: ARITH_OP differs on 103/103 e.g. [15] -> 4 / 0
+[107/176] MBPPP/79: BOUND_CONST differs on 105/105 e.g. ['Hadoop'] -> False / True
+[108/176] MBPPP/282: ARITH_OP differs on 107/107 e.g. [[1, 2, 3], [4, 5, 6]] -> [-3, -3, -3] / [5, 7, 9]
+[109/176] MBPPP/724: no candidates
+[110/176] MBPPP/290: no candidates
+[111/176] MBPPP/745: BOUND_CONST differs on 66/107 e.g. [1, 22] -> [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 1... / []
+[112/176] MBPPP/735: CMP_OP differs on 105/111 e.g. [9] -> 15 / 9
+[113/176] MBPPP/433: CMP_OP differs on 2/106 e.g. [[1, 2, 3, 4, 5], 5] -> False / True
+[114/176] MBPPP/638: ARITH_OP differs on 94/105 e.g. [120, 35] -> 40 / 60
+[115/176] MBPPP/293: ARITH_OP differs on 106/106 e.g. [7, 8] -> 10.63014581273465 / 7.0710678118654755
+[116/176] MBPPP/310: no candidates
+[117/176] MBPPP/764: no candidates
+[118/176] MBPPP/266: ARITH_OP differs on 106/107 e.g. [5] -> 100 / 0
+[119/176] MBPPP/801: CMP_OP differs on 56/113 e.g. [1, 1, 1] -> 3 / 2
+[120/176] MBPPP/306: CMP_OP differs on 9/104 e.g. [[5, 3, 5, 1, 3, 6], 6, 1, 4] -> 3 / 6
+[121/176] MBPPP/458: ARITH_OP differs on 106/106 e.g. [10, 20] -> 200 / 0
+[122/176] MBPPP/472: BOUND_CONST differs on 2/104 e.g. [[1, 2, 3, 4, 5]] -> True / False
+[123/176] MBPPP/457: no candidates
+[124/176] MBPPP/473: no candidates
+[125/176] MBPPP/588: ARITH_OP differs on 95/104 e.g. [[1, 2, 3, 4]] -> 3 / 5
+[126/176] MBPPP/111: no candidates
+[127/176] MBPPP/232: no candidates
+[128/176] MBPPP/9: BOUND_CONST differs on 104/104 e.g. ['aaaa'] -> 1 / 0
+[129/176] MBPPP/274: ARITH_OP differs on 103/103 e.g. [4] -> 8 / 32
+[130/176] MBPPP/448: DEL_GUARD differs on 2/103 e.g. [True] -> 3 / 5
+[131/176] MBPPP/424: no candidates
+[132/176] MBPPP/622: NEG_GUARD differs on 114/114 e.g. [[1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5] -> 16.0 / 0.5
+[133/176] MBPPP/413: no candidates
+[134/176] MBPPP/292: ARITH_OP differs on 74/103 e.g. [10, 3] -> 3 / 30
+[135/176] MBPPP/576: CMP_OP differs on 13/113 e.g. [[1, 4, 3, 5], [1, 2]] -> False / raises IndexError
+[136/176] MBPPP/16: no candidates
+[137/176] MBPPP/70: CMP_OP differs on 120/120 e.g. [[(11, 22, 33), (44, 55, 66)]] -> True / False
+[138/176] MBPPP/726: BOUND_CONST differs on 107/110 e.g. [(1, 5, 7, 8, 10)] -> (5, 35, 56, 80) / (7, 40, 70)
+[139/176] MBPPP/626: ARITH_OP differs on 60/106 e.g. [0] -> 0 / raises ZeroDivisionError
+[140/176] MBPPP/796: no candidates
+[141/176] MBPPP/233: ARITH_OP differs on 103/103 e.g. [10, 5] -> 314.1592653589793 / 0.0
+[142/176] MBPPP/91: no candidates
+[143/176] MBPPP/406: CMP_OP differs on 107/107 e.g. [12] -> False / True
+[144/176] MBPPP/94: no candidates
+[145/176] MBPPP/137: DEL_GUARD differs on 1/114 e.g. [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]] -> inf / raises ZeroDivisionError
+[146/176] MBPPP/639: BOUND_CONST differs on 100/114 e.g. [['sally', 'Dylan', 'rebecca', 'Diana', 'Joanne',  -> 16 / 0
+[147/176] MBPPP/809: CMP_OP differs on 56/120 e.g. [(100, 200, 300), (100, 200, 299)] -> False / True
+[148/176] MBPPP/63: ARITH_OP differs on 120/120 e.g. [[(3, 5), (1, 7), (10, 3), (1, 2)]] -> 7 / 13
+[149/176] MBPPP/478: no candidates
+[150/176] MBPPP/760: CMP_OP differs on 108/108 e.g. [[1, 1, 1]] -> True / False
+[151/176] MBPPP/463: ARITH_OP differs on 44/108 e.g. [[1, -2, -3, 0, 7, -8, -2]] -> 112 / raises ZeroDivisionError
+[152/176] MBPPP/589: NEG_GUARD differs on 52/106 e.g. [1, 30] -> [1, 4, 9, 16, 25] / []
+[153/176] MBPPP/633: BOUND_CONST differs on 99/106 e.g. [[5, 9, 7, 6], 4] -> 47 / 20
+[154/176] MBPPP/465: no candidates
+[155/176] MBPPP/61: ARITH_OP differs on 103/105 e.g. ['112112'] -> 6 / 4
+[156/176] MBPPP/757: ARITH_OP differs on 86/113 e.g. [['julia', 'best', 'tseb', 'for', 'ailuj']] -> 2 / 3
+[157/176] MBPPP/56: ARITH_OP differs on 2/120 e.g. [73] -> True / False
+[158/176] MBPPP/456: no candidates
+[159/176] MBPPP/607: NEG_GUARD differs on 104/104 e.g. ['The quick brown fox jumps over the lazy dog.', ' -> ('fox', 16, 19) / None
+[160/176] MBPPP/415: ARITH_OP differs on 110/116 e.g. [[1, 2, 3, 4, 7, 0, 8, 4]] -> (7, 8) / raises ZeroDivisionError
+[161/176] MBPPP/787: no candidates
+[162/176] MBPPP/104: no candidates
+[163/176] MBPPP/425: no candidates
+[164/176] MBPPP/748: no candidates
+[165/176] MBPPP/397: no candidates
+[166/176] MBPPP/93: ARITH_OP differs on 101/111 e.g. [3, 4] -> 81 / 12
+[167/176] MBPPP/139: ARITH_OP differs on 103/103 e.g. [10] -> 62.83185307179586 / 0.0
+[168/176] MBPPP/252: no candidates
+[169/176] MBPPP/618: ARITH_OP differs on 103/106 e.g. [[4, 5, 6], [1, 2, 3]] -> [4.0, 2.5, 2.0] / [4, 10, 18]
+[170/176] MBPPP/427: no candidates
+[171/176] MBPPP/294: no candidates
+[172/176] MBPPP/113: BOUND_CONST differs on 4/120 e.g. ['-5'] -> True / False
+[173/176] MBPPP/631: CMP_OP differs on 108/109 e.g. ['Jumanji The Jungle'] -> 'Jumanji_The_Jungle' / '_______ ___ ______'
+[174/176] MBPPP/800: no candidates
+[175/176] MBPPP/592: ARITH_OP differs on 101/103 e.g. [3] -> 15 / 0
+[176/176] MBPPP/629: CMP_OP differs on 105/106 e.g. [[1, 2, 3, 4, 5]] -> [2, 4] / [1, 3, 5]
+{"functions": 176, "with_mutant": 129, "candidates_tried": 144, "equivalent": 8, "non_terminating": 2, "crashes_everywhere": 5, "process_failure": 0, "no_candidates": 45, "original_failed": 0}

@@ -1,0 +1,90 @@
+<venv>/bin/python src/explain.py --model qwen2.5-coder:14b
+qwen2.5-coder:14b: 258 explanations, 253 parsed as JSON -> results/explanations_qwen2.5-coder_14b.jsonl
+<venv>/bin/python src/explain.py --model claude-haiku-5-5
+claude-haiku-5-5: 258 explanations, 256 parsed as JSON -> results/explanations_claude-haiku-5-5.jsonl
+<venv>/bin/python src/check.py --explanations explanations_qwen2.5-coder_14b.jsonl
+  10/258
+  20/258
+  30/258
+  40/258
+  50/258
+  60/258
+  70/258
+  80/258
+  90/258
+  100/258
+  110/258
+  120/258
+  130/258
+  140/258
+  150/258
+  160/258
+  170/258
+  180/258
+  190/258
+  200/258
+  210/258
+  220/258
+  230/258
+  240/258
+  250/258
+ungrounded n=129 programmatic-error=0.713  judge[llama3.1:8b]-error=1.000  judge[gemma2:9b]-error=0.581
+grounded   n=129 programmatic-error=0.442  judge[llama3.1:8b]-error=1.000  judge[gemma2:9b]-error=0.240
+<venv>/bin/python src/check.py --explanations explanations_claude-haiku-5-5.jsonl --judges llama3.1:8b
+  10/258
+  20/258
+  30/258
+  40/258
+  50/258
+  60/258
+  70/258
+  80/258
+  90/258
+  100/258
+  110/258
+  120/258
+  130/258
+  140/258
+  150/258
+  160/258
+  170/258
+  180/258
+  190/258
+  200/258
+  210/258
+  220/258
+  230/258
+  240/258
+  250/258
+ungrounded n=129 programmatic-error=0.039  judge[llama3.1:8b]-error=0.922
+grounded   n=129 programmatic-error=0.023  judge[llama3.1:8b]-error=0.868
+<venv>/bin/python src/probe.py --model qwen2.5-coder:14b --kinds DESC,CF,DESC_MUT
+qwen2.5-coder:14b DESC     n=129 acc=0.814
+qwen2.5-coder:14b CF       n=129 acc=0.512
+qwen2.5-coder:14b DESC_MUT n=129 acc=0.411
+<venv>/bin/python src/probe.py --model qwen2.5-coder:7b-instruct-q8_0 --kinds DESC,CF
+qwen2.5-coder:7b-instruct-q8_0 DESC     n=129 acc=0.760
+qwen2.5-coder:7b-instruct-q8_0 CF       n=129 acc=0.279
+<venv>/bin/python src/analyze.py
+qwen2.5-coder:14b    programmatic                 n=129 U=0.713 [0.64, 0.79] G=0.442 [0.36, 0.53] d=0.271 [0.16, 0.37] p=3.3e-06
+qwen2.5-coder:14b    judge:llama3.1:8b            n=129 U=1.000 [1.00, 1.00] G=1.000 [1.00, 1.00] d=0.000 [0.00, 0.00] p=1
+qwen2.5-coder:14b    judge:gemma2:9b              n=129 U=0.581 [0.50, 0.67] G=0.240 [0.17, 0.32] d=0.341 [0.23, 0.45] p=1.1e-08
+qwen2.5-coder:14b    judges:both                  n=129 U=0.581 [0.50, 0.67] G=0.240 [0.16, 0.31] d=0.341 [0.23, 0.44] p=1.1e-08
+qwen2.5-coder:14b    judges:either                n=129 U=1.000 [1.00, 1.00] G=1.000 [1.00, 1.00] d=0.000 [0.00, 0.00] p=1
+claude-haiku-5-5     programmatic                 n=129 U=0.039 [0.01, 0.08] G=0.023 [0.00, 0.05] d=0.016 [-0.01, 0.05] p=0.62
+claude-haiku-5-5     judge:llama3.1:8b            n=129 U=0.922 [0.88, 0.96] G=0.868 [0.81, 0.92] d=0.054 [-0.02, 0.13] p=0.21
+qwen2.5-coder:14b              DESC      n=129 acc=0.814 [0.74, 0.88]
+qwen2.5-coder:14b              DESC_MUT  n=129 acc=0.411 [0.33, 0.50]
+qwen2.5-coder:14b              CF        n=129 acc=0.512 [0.43, 0.60]
+qwen2.5-coder:7b-instruct-q8_0 DESC      n=129 acc=0.760 [0.68, 0.83]
+qwen2.5-coder:7b-instruct-q8_0 CF        n=129 acc=0.279 [0.21, 0.36]
+<venv>/bin/python src/render.py
+rendered -> <home>/Workstation/ICPC-NIER/ICPC-ERA/proposals/E02-counterfactual-comprehension/manuscript/generated ['fig_operator.tex', 'macros.tex', 'tab_articulation.tex', 'tab_corpus.tex', 'tab_probe.tex']
+cd ../manuscript && rm -rf build && mkdir -p build && cp -r main.tex references.bib sections generated build/ \
+	&& sed -i '' 's/compat=1.18/compat=1.17/' build/main.tex \
+	&& cd build && pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null \
+	&& bibtex main >/dev/null && pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null \
+	&& pdflatex -interaction=nonstopmode -halt-on-error main.tex | grep -E "Output written|^!" ; \
+	cp ../manuscript/build/main.pdf ../manuscript/main.pdf && grep -c "undefined" ../manuscript/build/main.log || true
+Output written on main.pdf (5 pages, 187658 bytes).
+0

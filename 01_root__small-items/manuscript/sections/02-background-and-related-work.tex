@@ -1,0 +1,24 @@
+\section{Background and Related Work}\label{sec:related}
+\textbf{Counterfactuals over code, model-centric.}
+Executable Counterfactuals~\cite{vashishtha2026executable} separates \emph{interventional} questions (apply a change,
+predict the result) from \emph{counterfactual} ones that also require abducing a latent state, and finds LLM accuracy
+drops sharply on the latter. Our questions are interventional in their (and Pearl's~\cite{pearl2009causality})
+sense; we keep the XAI term ``counterfactual explanation''~\cite{wachter2018counterfactual,miller2019explanation} for the
+contrast \emph{shown to a reader} and do not claim the latent-state construct. DexBench~\cite{hasanov2026path},
+CACP~\cite{hooda2024cacp} and CRUXEval~\cite{gu2024cruxeval} also probe models. Yang et al.~\cite{yang2025reversion} define \emph{reversion}: predicting the original's output for a
+mutated program, high for earlier models and near zero for the latest; CodeCrash~\cite{lam2025codecrash} shows that
+misleading natural language in code derails LLM output prediction.
+
+\textbf{Explaining programs and changes.} Cito et al.~\cite{cito2022counterfactual} explain a \emph{model of code};
+WatChat~\cite{chandra2024watchat} explains perplexing behaviour via a user's mistaken mental model and the
+Whyline~\cite{ko2008whyline} answers why/why-not questions from a trace; both are human-facing; neither checks against
+an executed contrast nor tests transfer. Differential symbolic execution~\cite{person2008dse}
+characterises exactly the inputs on which two versions differ, and change-impact
+analysis~\cite{ren2004chianti} locates affected code; we approximate it on tests and ask whether an LLM can
+\emph{state} it.
+
+\textbf{Reliability and education.} LLM summaries miss mutation-induced changes~\cite{khatib2026mutation}; LLM self-review of
+code changes is ``articulate but wrong''~\cite{reddy2026articulate}; programmers over-trust LLM assertions~\cite{kaufman2026judges};
+model and human understandability may differ~\cite{rong2026behavioral}. What-if ``modify'' items are not new (\S\ref{sec:intro}); our contribution is to make
+them \emph{generated and checkable}. Mutants are standard proxies for faults~\cite{jia2011mutation,just2014mutants}; here they are interventions to
+explain.

@@ -1,0 +1,16 @@
+  [ungrounded] 10/72 (10 new, 73s)
+  [ungrounded] 20/72 (20 new, 141s)
+  [ungrounded] 30/72 (30 new, 228s)
+  [ungrounded] 40/72 (40 new, 297s)
+  [ungrounded] 50/72 (50 new, 369s)
+  [ungrounded] 60/72 (60 new, 446s)
+  [ungrounded] 70/72 (70 new, 539s)
+  [grounded] 8/72 (80 new, 598s)
+  [grounded] 18/72 (90 new, 660s)
+  [grounded] 28/72 (100 new, 719s)
+  [grounded] 38/72 (110 new, 775s)
+  [grounded] 48/72 (120 new, 852s)
+  [grounded] 58/72 (130 new, 925s)
+  [grounded] 68/72 (140 new, 979s)
+claude-haiku-5-5 ungrounded n=72 exact=0.944 bal_acc=0.960
+claude-haiku-5-5 grounded   n=72 exact=0.986 bal_acc=0.994

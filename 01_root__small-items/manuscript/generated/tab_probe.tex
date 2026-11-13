@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering\footnotesize
+\caption{Model-side probe (NOT human data): accuracy (\%) by benchmark; main rows without docstrings, comments and entry name. HE+ $n$=76, MBPP+ $n$=53 (CF on an unaffected input: $n$=69/35).}
+\label{tab:probe}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+ & \multicolumn{2}{c}{Qwen2.5-Coder-14B} & \multicolumn{2}{c}{Qwen2.5-Coder-7B} \\
+Question & HE+ & MBPP+ & HE+ & MBPP+ \\
+\midrule
+descriptive ($P$) & 79 & 75 & 78 & 74 \\
+counterfactual & 46 & 51 & 33 & 34 \\
+counterf., unaffected $x$ & 75 & 66 & 75 & 63 \\
+descriptive ($P_m$ shown) & 46 & 62 & 36 & 51 \\
+\midrule
+\multicolumn{5}{@{}l}{\emph{Ablation: initial materials (docstring, comments and name kept)}} \\
+descriptive ($P$) & 83 & 79 & 76 & 75 \\
+descriptive ($P_m$ shown) & 29 & 58 & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

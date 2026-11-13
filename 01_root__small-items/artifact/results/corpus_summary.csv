@@ -1,0 +1,7 @@
+op,label,n,n_he,n_mbpp,median_diff_frac,raise_mostly
+NEG_GUARD,negate guard,19,16,3,0.95,2
+DEL_GUARD,remove check,13,11,2,0.06,0
+CMP_OP,comparison op,25,11,14,0.97,1
+ARITH_OP,arithmetic op,52,26,26,0.95,3
+BOUND_CONST,boundary const,20,12,8,0.67,0
+ALL,all,129,76,53,0.91,6

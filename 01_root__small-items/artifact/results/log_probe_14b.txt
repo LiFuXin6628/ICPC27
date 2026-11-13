@@ -1,0 +1,16 @@
+  [CF] 11/129 (20 new, 1300s)
+  [CF] 31/129 (40 new, 1758s)
+  [CF] 51/129 (60 new, 2005s)
+  [CF] 71/129 (80 new, 2130s)
+  [CF] 91/129 (100 new, 2257s)
+  [CF] 111/129 (120 new, 2358s)
+  [DESC_MUT] 2/129 (140 new, 2491s)
+  [DESC_MUT] 22/129 (160 new, 2606s)
+  [DESC_MUT] 42/129 (180 new, 2722s)
+  [DESC_MUT] 62/129 (200 new, 2832s)
+  [DESC_MUT] 82/129 (220 new, 2970s)
+  [DESC_MUT] 102/129 (240 new, 3095s)
+  [DESC_MUT] 122/129 (260 new, 3210s)
+qwen2.5-coder:14b DESC     n=129 acc=0.814
+qwen2.5-coder:14b CF       n=129 acc=0.512
+qwen2.5-coder:14b DESC_MUT n=129 acc=0.411

@@ -1,0 +1,11 @@
+{
+ "functions": 176,
+ "with_mutant": 129,
+ "candidates_tried": 144,
+ "equivalent": 8,
+ "non_terminating": 2,
+ "crashes_everywhere": 5,
+ "process_failure": 0,
+ "no_candidates": 45,
+ "original_failed": 0
+}

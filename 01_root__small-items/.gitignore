@@ -1,0 +1,28 @@
+__pycache__/
+*.pyc
+manuscript/build/
+# --- added for private repo ---
+__pycache__/
+*.pyc
+.DS_Store
+# third-party clones and large public downloads: re-fetch with `make data`
+artifact/data/repos/
+artifact/data/trajs/
+# LaTeX build byproducts (main.pdf is kept)
+manuscript/build/
+artifact/build_pdf/
+manuscript/**/*.aux
+manuscript/**/*.log
+manuscript/**/*.out
+manuscript/**/*.blg
+manuscript/**/*.synctex.gz
+# --- exclude audit/review/markdown files (keep STATUS.md and review.md) ---
+*.md
+reviews/
+*audit*
+*Audit*
+*AUDIT*
+*review*
+*Review*
+!/STATUS.md
+!/review.md

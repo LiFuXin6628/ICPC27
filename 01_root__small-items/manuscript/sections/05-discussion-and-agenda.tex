@@ -1,0 +1,37 @@
+\section{Planned Human Study, Agenda, and Threats}\label{sec:agenda}
+\textbf{Planned protocol (not run, not yet registered; no participant data exist).} Population: senior
+CS students; explanation type (code only / descriptive / counterfactual) varies \emph{between} subjects to avoid
+carry-over; the code-only arm gets the same study time. The authors write the descriptive explanation from the
+same executed examples, length-matched to the counterfactual one within 10\% of words. Materials: functions without
+docstrings whose explained mutant is not broad, each with a \emph{held-out} second intervention on another line,
+non-equivalent on $T$ to both the original and the explained mutant, with affected-set Jaccard overlap $\le$0.5
+(near transfer). Shown predicates must be certified on $T$; guard predicates point at the diff rather than
+explain it and should be excluded during human screening. Of 129 functions, \SNEligibleMixedNonbroad{} have
+a qualifying held-out mutant with affected and unaffected inputs, and \SNEligibleCertified{} also have a certified grounded
+predicate. Only 13 of the 29 lie outside
+the hosted-model subset (predicates for them would add about 4); the 12-function target needs a pool enlarged with
+repository functions, or author-rewritten guard/dual predicates labelled as such. Participants answer
+two unseen change-impact items per function (half on unaffected inputs) as free-form values scored by execution, with
+50--100\% confidence.
+\emph{Analysis:} mixed logistic regression $\textit{correct}\sim\textit{condition}+(1|\textit{participant})+(1|\textit{function})$
+(H2; counterfactual vs.\ descriptive confirmatory); a mixed linear model on per-item Brier score (H3). Target $N$=30 per arm, to be confirmed by simulation seeded with the model-side
+item difficulties (labelled as such) and capped at 40; recruitment stops at the cap or the deadline. Registration and ethics
+approval precede data collection.
+
+\textbf{Why it matters, and agenda.} H0's reliability problem is small for a hosted model here; what remains is (a) a format
+in which execution \emph{certifies} generated what-if explanations on the test inputs, giving PRIMM-style modify tasks and
+assessments an execution-checked key, and (b) H2, still unmeasured. Agenda: (i) the study; (ii) repository functions and commits (a contamination test); (iii) $\Delta$ beyond $T$ via
+symbolic execution~\cite{person2008dse}; (iv) annotation of $d$.
+
+\textbf{Deviations from plan.} The unaffected-input control was dropped for GPU time in an initial run and later restored; the
+planned judge (a generator's model family) was replaced before any call; the predicate measure and its labels,
+docstring stripping, held-out mutants and the Holm family were added in a second analysis phase; the default-argument operator never fired; the API budget rose from 300 to \SLlmCallsStrong{} calls.
+
+\textbf{Threats.} \emph{Construct:} witness validity is a lower bound on explanation error; the predicate checks $A$
+only on $T$, and exactness does not imply a characterisation (predicate-form classification requires independent human
+labelling); the $d$ prose is
+unchecked because the two small judges failed. \emph{Internal:} equivalence and $\Delta_T$ are relative to $T$; keeping the first
+non-equivalent candidate favours broad mutants. \emph{External:} short benchmark functions, possibly in training
+data, which could inflate the hosted model's predicate result; five operators fired, some producing type errors rather than plausible edits. \emph{Conclusion:} local models at
+temperature 0 with a fixed seed; \StrongModel{} at default sampling (its client library accepts no temperature), one sample per item,
+reproducible only via the cache; Holm-corrected tests.

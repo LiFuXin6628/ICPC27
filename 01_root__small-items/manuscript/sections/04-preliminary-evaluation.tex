@@ -1,0 +1,65 @@
+\section{Preliminary Evaluation}\label{sec:eval}
+\textbf{RQ1 (H0):} how often do LLMs misexplain an intervention, ungrounded and grounded?
+\textbf{RQ2 (H1, model-side):} are counterfactual questions harder than matched descriptive ones?
+
+\textbf{Corpus.} We sampled 88 HumanEval+ and 88 MBPP+ tasks~\cite{chen2021humaneval,austin2021mbpp,liu2023evalplus}
+(seeded), with canonical solutions as programs and up to 120 EvalPlus inputs as $T$ (mean
+\SMeanInputsPerFunction). Of \SNFunctionsAttempted{} functions, \SNNoCandidates{} had no mutation site, \SNNoNonequivalent{}
+had no non-equivalent candidate among those tried, and \SNMutants{} received a mutant (Table~\ref{tab:corpus}; error columns descriptive, G$^{*}$:
+copies count as errors);
+\PEquivalentCandidateRate\% of tried candidates were equivalent on $T$ and \SNDegenerate{} degenerate. Most mutants are
+broad (median \PzMedianDifferingFraction\% of inputs differ; \SNMutantsAllDiffer{} differ on all); only removed checks are
+typically narrow; \SNMutantsRaiseMostly{} raise an exception on most inputs.
+\input{generated/tab_corpus}
+
+\textbf{Generators and statistics.} \GenModel{} (local, temperature 0, fixed seed) explains all functions;
+\StrongModel{} (\texttt{claude-haiku-5-5}, default sampling) explains all functions and writes predicates for a seeded
+random subset of \SPredStrongN{} (API budget: \SLlmCallsStrong{} calls in total). All \SLlmCacheFiles{} responses are
+cached; the analysis replays exactly. CIs are percentile bootstraps over functions; tests are exact
+McNemar~\cite{mcnemar1947note} with Holm correction over a family of \SHolmFamilySize{} tests fixed in a second analysis
+phase (witness raw and copies-as-error, affected-set exact, per generator; descriptive and $P_m$-shown vs.\ counterfactual,
+per probe model; the docstring ablation). In Table~\ref{tab:h0}, affected-set error = $\geq$1 misclassified input
+(unscorable = error); bal.\ acc.\ (unscorable = 0.5) and F1 (scorable only) are per-function means; const.\ = ``every
+input is affected'' (all functions).
+\input{generated/tab_h0}
+
+\textbf{RQ1: grounding helps only by copying.} For \GenModel{}, \PzWitGenRawA\% of ungrounded witnesses fail the check
+(\PzFailGenUngroundedMalformedwitness\% malformed argument lists); grounded, \PzWitGenRawB\%. But \PzWitGenCopied\% of grounded witnesses were copied from the evidence despite the
+instruction (\SWitGenCopiedPass{} of the grounded passes); the model's own valid witnesses go from \SWitGenOwnValidU{}
+to \SWitGenOwnValidG{}, and counting copies as errors gives \PWitGenStrictB\% vs.\ \PWitGenStrictA\% ($p$=\SWitGenStrictPHolm,
+Table~\ref{tab:h0}). \GenModel's affected-input predicates are poor: on exact match they misclassify some test input for
+\PzPredGenExactA\% of functions ungrounded, close to the constant ``every input is affected'' predicate
+(\PzPredGenTrivialExactErr\%); on F1 they are worse than that constant (\PPredGenUFone{} vs.\ \PPredGenTrivialFone), and only
+balanced accuracy puts them above it (\PPredGenBalaccU{} vs.\ \PPredGenTrivialBal). Grounded, exact-match error is
+\PzPredGenExactB\% ($p$=\SPredGenExactP, Holm \SPredGenExactPHolm), but the evidence block also reveals $|\Delta_T|/|T|$:
+for functions that differ on every input it says so, and four grounded predicates are literally \texttt{return True};
+without those functions the contrast is \SPredGenExactNotalldifferNonezero/\SPredGenExactNotalldifferNzeroone{}
+($p$=\SPredGenExactNotalldifferP), the predicate analogue of copying. As a non-LLM witness baseline, seeded type-preserving differential fuzzing (50 fresh inputs per mutant) found a valid witness on 102/129 (79.1\%) mutants within 10 inputs, 110/129 (85.3\%) within 25, and 113/129 (87.6\%) within 50. On up to 50 fresh inputs strictly outside $T$ per function, of predicates exact on $T$, \StrongModel{} remained exact on all fresh inputs for 65/68 (U) and 64/71 (G) functions, whereas \GenModel{} remained exact for 17/26 (U) and 21/38 (G).
+\input{generated/fig_strata}
+
+\textbf{LLM judges} (\JudgeA, \JudgeB) graded the $A$/$d$ prose and are not evidence: \JudgeA{} rejects
+\PzJoneRejectRateGen\% of \GenModel{} and \PzJoneRejectRateStrong\% of \StrongModel{} explanations; \JudgeB{} is unvalidated ($\kappa$=\SJtwoProgKappaGen{}
+with the witness check).
+
+\textbf{RQ2 pilot (models as stand-ins, NOT human data).} A model answers, on the shortest differing input $x^\star$, a \emph{descriptive}
+(what does $P(x^\star)$ return?) and a \emph{counterfactual} question (given the diff, what would the modified function
+return?), the counterfactual question on an \emph{unaffected} input, and the descriptive question with $P_m$ shown. An initial run kept HumanEval+ docstrings (which
+describe the \emph{original}) and cited raw-source line numbers, wrong for \SNLineMismatchRoundone{} prompts; the
+main run strips docstrings and comments, renames the entry function \texttt{f} (four helpers keep their names) and
+cites lines in the shown code (behaviour verified unchanged by execution). The ablation in Table~\ref{tab:probe} confirms the confound: on HumanEval+, accuracy with $P_m$
+shown rises from \PzAblPonefourDESCMUTHeB\% to \PzAblPonefourDESCMUTHeA\% once docstring, comments and name are removed ($p$=\SAblPonefourDESCMUTHePHolm),
+and answers that \emph{revert} to the original's output~\cite{yang2025reversion} fall from \PzProbePonefourdDESCMUTHeReverts\%
+to \PzProbePonefoursDESCMUTHeReverts\%, consistent with CodeCrash~\cite{lam2025codecrash}; MBPP+ (no docstrings) barely moves.
+With cues removed, \GenModel{} answers \PzProbePonefoursDESC\% of descriptive and \PzProbePonefoursCF\% of counterfactual
+questions ($\Delta$=\PProbePonefoursDESCVsCFD{} points, $p$\,\SProbePonefoursDESCVsCFPHolm). On unaffected inputs it is
+right \PzProbePonefoursCFCTRL\% of the time, close to its descriptive accuracy on the same functions
+(\PzProbePonefoursDESCOnCtrl\%), so the diff presentation itself is not the difficulty; this control alone cannot rule out
+ignoring the edit. What argues against pure inertia is that only \PzProbePonefoursCFReverts\% of counterfactual answers on
+affected inputs revert to the original's output (inertia predicts $\approx$\PzProbePonefoursDESC\%): treating ``the answer
+changes'' as a detection, the hit rate is \PProbePonefoursHit\% vs.\ a false-alarm rate of \PProbePonefoursFa\%
+($d'$=\SProbePonefoursDprime; hits over 129, false alarms over 104 functions; \ProbeB{} \PProbePsevensHit\% vs.\ \PProbePsevensFa\%, $d'$=\SProbePsevensDprime, closer to
+inertia). With $P_m$ shown in full, accuracy (\PzProbePonefoursDESCMUT\%) is not detectably different from the
+counterfactual question ($p$=\SProbePonefoursDESCMUTVsCFPHolm): most of the difficulty is tracing mutated code, consistent
+with memorised originals~\cite{yang2025reversion}, not the counterfactual framing. \ProbeB{} shows the same ordering
+(\PzProbePsevensDESC\% vs.\ \PzProbePsevensCF\%, $p$\,\SProbePsevensDESCVsCFPHolm). Humans have not memorised the originals, so this is a weak prior for H1.
+\input{generated/tab_probe}
