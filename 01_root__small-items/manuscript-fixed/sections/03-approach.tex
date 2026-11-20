@@ -2,7 +2,7 @@
 \begin{definition}[Counterfactual explanation]\label{def:cfe}
 Let $P$ be a function, $T$ a test suite, and $m$ a single-site syntactic edit yielding $P_m$. Write $P(x)\simeq P_m(x)$ when both return equal values or raise the same exception type. The \emph{executed difference} is $\Delta_T(P,m)=\{x\in T : P(x)\not\simeq P_m(x)\}$. A counterfactual explanation is $E=(m,A,d,x^\star,y,y_m)$: the edit, affected-input claim $A$, prose statement $d$, and witness $x^\star$ with claimed outcomes $y,y_m$. $E$ is \emph{witness-valid} iff $P(x^\star)\not\simeq P_m(x^\star)$, $P(x^\star)\simeq y$ and $P_m(x^\star)\simeq y_m$. If $A$ is given as a predicate $a:T\to\{0,1\}$, $E$ is \emph{affected-exact on $T$} iff $a(x)=[x\in\Delta_T]$ for all $x\in T$.
 \end{definition}
-Prose $d$ is unchecked in the loop. Value comparison uses float tolerances ($10^{-7}$ rel, $10^{-6}$ abs) and sequence structural matching; exceptions match by type.
+\textbf{Caveat on exactness:} ``Exact on $T$'' guarantees empirical agreement solely over the observed test suite $T$; it is explicitly not a formal proof of equivalence across the unbounded input domain, as unexercised paths may harbor undiscovered discrepancies. Prose $d$ is unchecked in the loop. Value comparison uses float tolerances ($10^{-7}$ rel, $10^{-6}$ abs) and sequence structural matching; exceptions match by type.
 
 \textbf{Pipeline.} \CoDE has four stages.
 \emph{(1) Intervene.} AST operators mutate $P$: negate conditions; remove single-statement guards; swap comparisons ($<\!\leftrightarrow\!\le$, $>\!\leftrightarrow\!\ge$, $==\!\leftrightarrow\!\neq$); swap arithmetic ($+\!\leftrightarrow\!-$, $*\!\leftrightarrow\!/\!/$, $\%\!\to\!/\!/$, $/\!\to\!*$, $**\!\to\!*$); shift constants ($\pm1$); or alter default arguments.
