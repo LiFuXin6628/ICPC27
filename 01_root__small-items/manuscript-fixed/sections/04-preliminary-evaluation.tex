@@ -1,60 +1,27 @@
 \section{Preliminary Evaluation}\label{sec:eval}
-\textbf{RQ1 (H0):} how often do generated witnesses and predicates fail their execution checks with and without evidence?
-\textbf{RQ2 (H1, model-side):} how does performance differ between change-impact and matched descriptive questions?
+\textbf{RQ1 (H0):} how often do generated witnesses and predicates fail execution checks with and without evidence?
+\textbf{RQ2 (H1):} how does performance differ between change-impact and matched descriptive queries?
 
-\textbf{Corpus.} We sampled 88 HumanEval+ and 88 MBPP+ functions~\cite{chen2021humaneval,austin2021mbpp,liu2023evalplus}
-using a fixed seed, with up to 120 EvalPlus inputs per function (mean \SMeanInputsPerFunction; 100\% line and 96.4\% branch coverage on original programs, including boundary cases like empty collections and edge floats).
-Of \SNFunctionsAttempted{} functions, \SNNoCandidates{} had no mutation site, \SNNoNonequivalent{} had no qualifying candidate
-among those tried, and \SNMutants{} yielded a retained edit. Of tried candidates, \PEquivalentCandidateRate\% were equivalent on
-$T$ and \SNDegenerate{} were degenerate. The median retained edit affected \PzMedianDifferingFraction\% of inputs.
-\SNMutantsAllDiffer{} edits affected every input, and \SNMutantsRaiseMostly{} introduced exceptions on most inputs.
-Table~\ref{tab:corpus} shows the operator breakdown. Removed checks typically affected fewer inputs than other edits.
+\textbf{Corpus.} We sampled 88 HumanEval+ and 88 MBPP+ functions~\cite{chen2021humaneval,austin2021mbpp,liu2023evalplus} (mean \SMeanInputsPerFunction{} inputs; 100\% line, 96.4\% branch coverage). Of \SNFunctionsAttempted{} functions, \SNNoCandidates{} had no mutation site, \SNNoNonequivalent{} had no qualifying edit, and \SNMutants{} yielded a retained edit (\PEquivalentCandidateRate\% equivalent on $T$, \SNDegenerate\% degenerate). Median edit affected \PzMedianDifferingFraction\% of inputs. Table~\ref{tab:corpus} shows operator breakdown.
 \input{generated/tab_corpus}
 
-\textbf{Generators and measures.} \GenModel{} (temperature 0, fixed seed) and \StrongModel{} (default sampling)
-produced witnesses for all \SNMutants{} functions. Qwen produced predicates for all functions and Haiku for a seeded
-subset of \SPredStrongN{}. All \SLlmCacheFiles{} responses are cached. Affected-set error includes any test
-misclassification or unscorable predicate. Balanced accuracy and F1 are per-function means. Unscorable
-predicates receive 0.5 for balanced accuracy and are omitted from F1. The constant baseline predicts every input is
-affected. Table~\ref{tab:h0} reports function-level bootstrap intervals and exact
-McNemar tests~\cite{mcnemar1947note}, with Holm correction across \SHolmFamilySize{} tests.
+\textbf{Generators and measures.} \GenModel{} and \StrongModel{} produced witnesses for all \SNMutants{} functions. Qwen generated predicates for all edits and Haiku for a seeded subset of \SPredStrongN{}. Affected-set error includes any misclassification or unscorable predicate. Unscorable predicates receive 0.5 for balanced accuracy and are omitted from F1. Table~\ref{tab:h0} reports bootstrap intervals and Holm-adjusted McNemar tests~\cite{mcnemar1947note}.
 \input{generated/tab_h0}
 
 \textbf{RQ1: Witness validity, taxonomy, and copying.}
-Categorizing Qwen's \SNMutants{} ungrounded witnesses reveals that 28.7\% were valid, 31.8\% non-differing, 23.3\% outcome mismatches, and 16.3\% (21 cases) malformed. In grounded mode, malformed cases dropped to 7.8\% (10 cases) as prompt examples illustrated valid syntax. Haiku produced $<2\%$ malformed witnesses across both conditions.
-Qwen's raw witness error fell from \PWitGenRawA\% in U to \PWitGenRawB\% in G, but \SWitGenCopiedPass{} grounded passes reused a shown input. Counting copies as errors, grounded error was \PWitGenStrictB\% ($p$=\SWitGenStrictPHolm), yielding only \SWitGenOwnValidG{} new valid witnesses vs.\ \SWitGenOwnValidU{} in U. A copied witness remains valid for explanation. The strict metric measures discovery beyond prompt examples.
-Seeded differential testing found witnesses for 102/129 edits (79.1\%) within 10 scorable inputs and 113/129 (87.6\%) within 50. This baseline uses fresh inputs generated from the types and values of existing tests. It measures discovery with an execution budget, while the model produces one candidate per prompt.
+Categorizing Qwen's \SNMutants{} ungrounded witnesses: 28.7\% valid, 31.8\% non-differing, 23.3\% outcome mismatches, 16.3\% (21) malformed. In grounded mode, malformed dropped to 7.8\% (10). Haiku produced $<2\%$ malformed witnesses.
+Raw witness error fell from \PWitGenRawA\% (U) to \PWitGenRawB\% (G), but \SWitGenCopiedPass{} grounded passes reused a shown input. Counting copies as errors, grounded error was \PWitGenStrictB\% ($p$=\SWitGenStrictPHolm), yielding only \SWitGenOwnValidG{} new valid witnesses vs.\ \SWitGenOwnValidU{} in U. Strict measures novelty beyond prompt examples.
+Seeded differential testing found witnesses for 102/129 edits (79.1\%) within 10 inputs and 113/129 (87.6\%) within 50, showing the power of an execution budget.
 
-\textbf{RQ1: Affected-input predicates.} Qwen's exact-match error fell from \PPredGenExactA\% to
-\PPredGenExactB\% (Holm-adjusted $p$=\SPredGenExactPHolm). Its mean F1 was below the constant baseline
-in both conditions. Grounding supplied counts and examples together. The counts reveal when every test input is
-affected. Four grounded Qwen predicates returned \texttt{True} unconditionally. Haiku was exact on
-\SPredStrongUExactN{} of \SPredStrongN{} functions in U and 71 of \SPredStrongN{} in G. The paired contrast
-was inconclusive (Table~\ref{tab:h0}). Taken together, these results give mixed support for H0 across models and measures.
+\textbf{RQ1: Affected-input predicates.} Qwen's exact-match error fell from \PPredGenExactA\% to \PPredGenExactB\% (adjusted $p$=\SPredGenExactPHolm). Four grounded Qwen predicates returned \texttt{True} unconditionally. Haiku was exact on \SPredStrongUExactN{} of \SPredStrongN{} functions in U and 71 in G (Table~\ref{tab:h0}), giving mixed support for H0.
 
-\textbf{Sensitivity and out-of-$T$ checks.} After removing prompt examples in U and G, exact counts were 32/129 and 41/129
-for Qwen, and 68/72 and 71/72 for Haiku on the remaining inputs in $T$. On functions with both affected
-and unaffected inputs, full-$T$ counts were 21/104 and 27/104 for Qwen, and 53/56 and 55/56 for Haiku. Restricting
-further to differences between successful returns gave 18/86 and 23/86 for Qwen, and 45/47 and 47/47 for Haiku.
-Fig.~\ref{fig:strata} shows how errors vary with affectedness.
-To test whether exactness on $T$ holds on unseen inputs, we generated up to 50 fresh type-preserving inputs strictly outside $T$ per function and ran $P$, $P_m$, and all cached predicates in separate subprocesses. Of predicates exact on $T$, Haiku remained exact on all fresh inputs for 65/68 (U) and 64/71 (G) functions, whereas Qwen remained exact for only 17/26 (U) and 21/38 (G). In addition, on two purposively selected functions with targeted boundary inputs, Haiku classified 362/362 threshold cases and 506/506 palindrome-mismatch cases correctly, compared to Qwen's 170/362 and 289/506. These targeted checks cover two functions. Exactness is measured on the sampled inputs and gives no domain-wide guarantee.
-
-\textbf{Analytical reference on two edits.} Where formal methods apply, symbolic partial-equivalence analyses~\cite{sarker2026impact,person2008dse} derive exact, sound conditions over modeled domains (e.g., linear arithmetic), whereas \CoDE produces empirical predicates checked on $T$. To compare them head-to-head on two benchmark edits, we derived analytical conditions: for integer lists in HumanEval+/52, the result changes iff some element equals the threshold and all elements are $\le$ threshold; for HumanEval+/73 (loop shortened from $\lfloor n/2\rfloor$ to $\lfloor n/3\rfloor$), the result changes iff some omitted index $i\in[\lfloor n/3\rfloor,\lfloor n/2\rfloor)$ satisfies $a_i\ne a_{n-1-i}$. On all 868 targeted cases, Haiku's generated predicates showed 100\% empirical agreement with these analytical conditions. While symbolic tools provide formal soundness on restricted domains, \CoDE scales to arbitrary dynamic Python data structures where symbolic engines face path explosion or unsupported types.
+\textbf{Sensitivity, out-of-$T$, and analytical checks.} Removing prompt examples in U/G yielded exact counts of 32/129 and 41/129 for Qwen, and 68/72 and 71/72 for Haiku. On functions with mixed affectedness, counts were 21/104 and 27/104 (Qwen) vs.\ 53/56 and 55/56 (Haiku). Fig.~\ref{fig:strata} shows error distributions across strata.
+Testing generalization on up to 50 fresh inputs strictly outside $T$, Haiku remained exact on all fresh inputs for 65/68 (U) and 64/71 (G) functions (Qwen: 17/26 and 21/38). On targeted boundary inputs, Haiku classified 362/362 threshold and 506/506 palindrome-mismatch cases correctly (Qwen: 170/362, 289/506).
+Where formal methods apply~\cite{sarker2026impact,person2008dse}, symbolic analysis derives exact conditions over numerical domains. Comparing head-to-head on two benchmark edits (HumanEval+/52 threshold condition and /73 loop bounds), Haiku's predicates showed 100\% empirical agreement with analytical conditions across all 868 targeted cases, while scaling to dynamic Python structures beyond symbolic solvers.
 
 \input{generated/fig_strata}
 
-\textbf{RQ2: Model probe.} The probe compares output prediction for $P$ and prediction after seeing a diff, on the same
-affected input. Two controls use an unaffected input and show $P_m$ in full. We stripped docstrings and comments,
-renamed the entry point, verified unchanged behaviour by execution, and corrected line references in the displayed
-code. With $P_m$ shown, this ablation raised Qwen-14B accuracy on HumanEval+ from \PzAblPonefourDESCMUTHeB\%
-to \PzAblPonefourDESCMUTHeA\% and reduced reversion to original outputs, consistent with benchmark familiarity
-and misleading textual cues~\cite{yang2025reversion,lam2025codecrash}. With cues removed, descriptive accuracy
-was \PProbePonefoursDESC\% and change-impact accuracy \PProbePonefoursCF\%. Accuracy with $P_m$ shown
-was \PzProbePonefoursDESCMUT\%, and the contrast with the diff condition was inconclusive
-($p$=\SProbePonefoursDESCMUTVsCFPHolm). The unaffected control reached \PzProbePonefoursCFCTRL\%,
-and the 14B model detected changed outcomes with a \PProbePonefoursHit\% hit rate and a
-\PProbePonefoursFa\% false-alarm rate. The 7B model showed the same ordering for the two main tasks
-(Table~\ref{tab:probe}). These probe results demonstrate the inherent difficulty of change-impact prediction, motivating our direct human evaluation in \S\ref{sec:agenda}.
+\textbf{RQ2: Model probe.} Comparing output prediction for $P$ and diff-based prediction on the same affected input: with docstrings/comments stripped and entry points renamed to prevent memorization~\cite{yang2025reversion,lam2025codecrash}, descriptive accuracy was \PProbePonefoursDESC\% vs.\ change-impact accuracy of \PProbePonefoursCF\%. The unaffected control reached \PzProbePonefoursCFCTRL\% (Table~\ref{tab:probe}). These probe results demonstrate the inherent difficulty of change-impact prediction, motivating direct human study.
 \input{generated/tab_probe}
 
 

@@ -1,34 +1,14 @@
 \section{The Primitive and the \CoDE Pipeline}\label{sec:approach}
 \begin{definition}[Counterfactual explanation]\label{def:cfe}
-Let $P$ be a function, $T$ a set of test inputs, and $m$ a single-site syntactic intervention yielding $P_m$. Write
-$P(x)\simeq P_m(x)$ when both return equal values or raise the same exception type. The \emph{executed difference} is
-$\Delta_T(P,m)=\{x\in T : P(x)\not\simeq P_m(x)\}$. A counterfactual explanation is $E=(m,A,d,x^\star,y,y_m)$: the
-intervention, the affected-input claim $A$, a statement $d$ of how the result changes, and a witness $x^\star$ with claimed
-outcomes $y,y_m$. $E$ is \emph{witness-valid} iff $P(x^\star)\not\simeq P_m(x^\star)$, $P(x^\star)\simeq y$ and
-$P_m(x^\star)\simeq y_m$. If $A$ is given as a predicate $a:T\to\{0,1\}$, $E$ is \emph{affected-exact on $T$} iff
-$a(x)=[x\in\Delta_T]$ for all $x\in T$.
+Let $P$ be a function, $T$ a test suite, and $m$ a single-site syntactic edit yielding $P_m$. Write $P(x)\simeq P_m(x)$ when both return equal values or raise the same exception type. The \emph{executed difference} is $\Delta_T(P,m)=\{x\in T : P(x)\not\simeq P_m(x)\}$. A counterfactual explanation is $E=(m,A,d,x^\star,y,y_m)$: the edit, affected-input claim $A$, prose statement $d$, and witness $x^\star$ with claimed outcomes $y,y_m$. $E$ is \emph{witness-valid} iff $P(x^\star)\not\simeq P_m(x^\star)$, $P(x^\star)\simeq y$ and $P_m(x^\star)\simeq y_m$. If $A$ is given as a predicate $a:T\to\{0,1\}$, $E$ is \emph{affected-exact on $T$} iff $a(x)=[x\in\Delta_T]$ for all $x\in T$.
 \end{definition}
-The checks cover the witness and predicate. The prose $d$ is unchecked in the execution loop. A deterministic template can copy a
-verified witness from $\Delta_T$ by construction. This leaves open whether an explanation can identify new examples
-or characterize the affected inputs. The outcome comparison uses float tolerances (relative $10^{-7}$, absolute $10^{-6}$)
-and compares list and tuple contents, with set comparison for designated tasks. Exceptions match by type, so changing
-only a \texttt{ValueError} message leaves $\Delta_T$ unchanged.
+Prose $d$ is unchecked in the loop. Value comparison uses float tolerances ($10^{-7}$ rel, $10^{-6}$ abs) and sequence structural matching; exceptions match by type.
 
-\textbf{Pipeline.} \CoDE (Counterfactual Differential Explanation) has four stages.
-\emph{(1) Intervene.} AST operators propose edits in the target function: negate an \texttt{if}/\texttt{while} condition;
-remove an \texttt{if} whose body is a single return/raise/break/continue; swap a comparison
-($<\!\leftrightarrow\!\le$, $>\!\leftrightarrow\!\ge$, $==\!\leftrightarrow\!\neq$); swap an arithmetic operator
-($+\!\leftrightarrow\!-$, $*\!\leftrightarrow\!/\!/$, $\%\!\to\!/\!/$, $/\!\to\!*$, $**\!\to\!*$); shift an integer constant
-in a comparison, \texttt{range} or slice by $\pm1$; change a default argument. Candidates are tried in a seeded,
-operator-balanced order.
-\emph{(2) Execute.} $P$ and each candidate run on $T$ in a separate \texttt{python -I} process (empty working directory,
-minimal environment, recursion clamp 1500, per-input timeouts; process isolation, see \S\ref{sec:agenda}). The first candidate
-with $\Delta_T\neq\emptyset$ is kept; equivalent, non-terminating and crash-everywhere candidates are counted and skipped.
-\emph{(3) Articulate.} An LLM receives $P$ and the diff and returns $(A,d,x^\star,y,y_m)$ as JSON, and, in a separate
-call, $A$ as a Python predicate \texttt{affected(...)} (at most 12 lines, told not to re-implement either version).
-In \emph{Ungrounded} (U), the prompt contains only $P$, $P_m$, and schema instructions. In \emph{Grounded} (G), the prompt additionally provides execution evidence: the diff ratio $|\Delta_T|/|T|$, the 3 shortest differing inputs with both executed outputs, and 2 agreeing inputs, constrained by: \emph{``Do NOT copy any shown input; identify a novel witness.''}
-\emph{(4) Check.} Generated witnesses fall into four disjoint categories: (i)~\emph{valid} (causes divergence and both claimed outcomes match execution); (ii)~\emph{outcome mismatch} (causes divergence, but claimed $y$ or $y_m$ is wrong); (iii)~\emph{non-differing} ($P(x^\star)\simeq P_m(x^\star)$); and (iv)~\emph{malformed} (argument syntax error or uncaught exception in both versions). The check is lenient: both readings of an argument list for one-parameter functions are tried, and untyped ``raises'' matches any exception. Predicates pass an AST filter (no imports beyond pure math, no \texttt{open}/\texttt{eval}/\texttt{exec}) and run in the isolated runner on $T$; unparseable or non-Boolean outputs are \emph{unscorable}.
+\textbf{Pipeline.} \CoDE has four stages.
+\emph{(1) Intervene.} AST operators mutate $P$: negate conditions; remove single-statement guards; swap comparisons ($<\!\leftrightarrow\!\le$, $>\!\leftrightarrow\!\ge$, $==\!\leftrightarrow\!\neq$); swap arithmetic ($+\!\leftrightarrow\!-$, $*\!\leftrightarrow\!/\!/$, $\%\!\to\!/\!/$, $/\!\to\!*$, $**\!\to\!*$); shift constants ($\pm1$); or alter default arguments.
+\emph{(2) Execute.} $P$ and candidates run on $T$ in \texttt{python -I} (recursion clamp 1500, timeouts; \S\ref{sec:agenda}). The first candidate with $\Delta_T\neq\emptyset$ is kept; equivalents and crashes are skipped.
+\emph{(3) Articulate.} An LLM receives $P$ and the diff, producing $(A,d,x^\star,y,y_m)$ and predicate \texttt{affected(...)} ($\le12$ lines). In \emph{Ungrounded} (U), the prompt has only $P$, $P_m$, and schema. In \emph{Grounded} (G), it adds $|\Delta_T|/|T|$, 3 shortest differing inputs with outputs, and 2 agreeing inputs, constrained by: \emph{``Do NOT copy any shown input; identify a novel witness.''}
+\emph{(4) Check.} Witnesses are categorized into: (i)~\emph{valid} (causes divergence, claimed outcomes match execution); (ii)~\emph{outcome mismatch} (diverges, but $y$ or $y_m$ is wrong); (iii)~\emph{non-differing} ($P(x^\star)\simeq P_m(x^\star)$); and (iv)~\emph{malformed} (syntax error/uncaught exception). Predicates pass an AST sandbox and run on $T$; non-Boolean results are unscorable.
 
-Fig.~\ref{fig:teaser} is a real case (display simplified: no docstring, entry function renamed \texttt{f}, generators
-elided; ``14B'' is \GenModel, ``Haiku'' \StrongModel; ungrounded).
+Fig.~\ref{fig:teaser} shows an ungrounded example (simplified display; ``14B'' is \GenModel, ``Haiku'' \StrongModel).
 
